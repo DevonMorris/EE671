@@ -29,10 +29,30 @@
     Since $1 \neq 0$.
     \part
     M4.
-    \[d_m(x,z) = min(1, d(x,z)) \leq min(1, d(x,y) + d(y,z))\]
-    Since $d_m(x,z) \leq 1$ and $d_m(x,z) \leq d(x,z) \leq d(x,y) + d(y,z)$
-
+    \[d_m(x,z) = min(1, d(x,y)) \leq min(1, d(x,y) + d(y,z))\] 
+    by definition. Thus we have that
+    \[d_m(x,z) \leq min(1, d(x,y)) + min(1, d(y,z)) = d_m(x,y) + d_m(y,z)\]
   \end{parts}
+
+\end{solution}
+
+\begin{problem}[2-7]
+    Define the sequences $\mathbf{x}$, $\mathbf{y}$ by
+    \[x_n = \frac{1}{n + 1} \quad y_n = \frac{n}{n + 1}\]
+    Show that $d_{\infty}(\mathbf{x},\mathbf{y}) > |x_n - y_n|$ for $n\geq1$.
+\end{problem}
+
+\begin{solution}
+  We first note that
+  \[d_{\infty}(\mathbf{x},\mathbf{y}) = \sup_n \big\lvert\frac{1}{n+1} - \frac{n}{n+1}\big\rvert = \sup_n\frac{n - 1}{n+1} = 1\]
+  We also see that 
+  \[1 > \frac{n - 1}{n + 1} \quad \forall n \geq 1\]
+\end{solution}
+
+\begin{problem}[2-30]
+\end{problem}
+
+\begin{solution}
 \end{solution}
 
 \end{document}
