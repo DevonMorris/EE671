@@ -1,0 +1,38 @@
+\documentclass{homework}
+
+\name{Timothy Devon Morris}
+\course{EC En 671}
+\term{Fall 2018}
+\hwnum{1}
+
+\begin{document}
+
+\begin{problem}[2-6]
+  Let $(X,d)$ be a metric space. Show that
+  \[d_m(x,y) = min(1, d(x,y))\]
+  is a metric on $X$
+\end{problem}
+
+\begin{solution}
+  It is sufficient to show that $d_m$ satisfies the 4 axioms of a metric
+  \begin{parts}
+    \part 
+    M1. 
+    \[d_m(x,y) = min(1, d(x,y)) = min(1, d(y,x)) = d_m(y,x)\]
+    \part
+    M2.
+    \[d_m(x,y) = min(1, d(x,y)) \geq 0\]
+    Since both $1 \geq 0$, $d(x,y) \geq 0$.
+    \part
+    M3.
+    \[d_m(x,y) = min(1, d(x,y)) = 0 \iff x = y\]
+    Since $1 \neq 0$.
+    \part
+    M4.
+    \[d_m(x,z) = min(1, d(x,z)) \leq min(1, d(x,y) + d(y,z))\]
+    Since $d_m(x,z) \leq 1$ and $d_m(x,z) \leq d(x,z) \leq d(x,y) + d(y,z)$
+
+  \end{parts}
+\end{solution}
+
+\end{document}
