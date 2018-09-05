@@ -1,5 +1,7 @@
 \documentclass{homework}
 \usepackage{ dsfont }
+\usepackage{ mathtools }
+\usepackage{ commath }
 
 \name{Timothy Devon Morris}
 \course{EC En 671}
@@ -62,17 +64,127 @@
 \end{solution}
 
 \begin{problem}[2-22]
+  Show that if a sequence $\{x_n\}$ is convergent, then it is a Cauchy sequence.
 \end{problem}
+
+\begin{solution}
+  Assume that $\{x_n\}$ is convergent and has a limit of $x^*$. Thus, given $\epsilon > 0$ there exists an $N$ such that $d(x_n, x^*) < \epsilon/2 \quad \forall n \geq N$. Now let $m,n \geq N$. Consider $d(x_m, x_n)$.
+  \[d(x_m, x_n) \leq d(x_m, x^*) + d(x*,x_n) < \epsilon/2 + \epsilon/2 = \epsilon\]
+Thus, every convergent sequence is a cauchy sequence.
+\end{solution}
 
 \begin{problem}[2-33]
+  Prove the reverse triangle inequality
+  \[|\norm{x} - \norm{y}| \leq \norm{x-y}\]
 \end{problem}
+
+\begin{solution}
+  We will prove each case for the absolute value. Note, It suffices to show that 
+  \[\norm{x} \leq \norm{x - y} + \norm{y}\]
+  \[\norm{y} \leq \norm{x - y} + \norm{x}\]
+  This is easily shown using the triangle inequality for norms
+  \[\norm{x} = \norm{x - y + y} \leq \norm{x - y} + \norm{y}\]
+  \[\norm{y} = \norm{y - x + x} \leq \norm{y - x} + \norm{x} = \norm{x - y} + \norm{x}\]
+\end{solution}
 
 \begin{problem}[2-42]
+  Which of the following determines an inner product over $C^1[0,1]$.
+  \begin{parts}
+    \part
+    \[\langle f, g \rangle = \int_0^1 f'(t)g'(t)\ dt + f(0)g(0)\]
+    \part
+    \[\langle f, g \rangle = \int_0^1 f'(t)g'(t)\ dt\]
+  \end{parts}
 \end{problem}
+
+\begin{solution}
+  \begin{parts}
+    \part
+    We will show that the inner product is consistent with the 4 axioms below
+
+    IP1.
+    \[
+    \langle f, g \rangle = \int_0^1 f'(t)g'(t)\ dt + f(0)g(0) = \int_0^1 g'(t)f'(t) + g(0)f(0) = \langle g, f\rangle
+    \]
+    IP2.
+    \[
+      \langle \alpha f, g \rangle = \int_0^1 \alpha f'(t)g'(t)\ dt + \alpha f(0)g(0) =
+      \alpha\left(\int_0^1 f'(t)g'(t)\ dt + f(0)g(0)\right) = \alpha\langle f, g\rangle
+    \]
+    IP3.
+    $$
+    \begin{aligned}
+      \langle f + h, g \rangle = &\int_0^1 (f + h)'(t)g'(t)\ dt + (f + h)(0)g(0) =
+      \int_0^1f'(t)g'(t)\ dt + f(0)g(0) + \\
+      &\int_0^1 h'(t)g'(t)\ dt + h(0)g(0) = \langle f, g \rangle + \langle h, g \rangle
+   \end{aligned}
+   $$
+   IP4.
+   Consider $\langle f, f \rangle$
+   $$
+   \langle f, f \rangle = \int_0^1 f'(t)^2\ dt + f(0)^2 \geq 0
+   $$
+   If $f$ is the zero function then $\langle f, f\rangle$ = 0. Thus, assume $\langle f, f\rangle = 0$. By necessity, we must have that $f(0) = 0$ and $\int_0^1 f'(t)^2\ dt =0$. This implies that $f'(t) = 0 \quad \forall t \in (0,1)$. Thus we have the initial value problem
+   \[ f'(t) = 0 \quad f(0) = 0\]
+   Which has the solution $f(t) = 0$. Therefore this is an inner product.
+   \part
+   We will show that this candidate inner product violates IP4. Consider the function $f(t) = c$, where $c \in \mathds{R}/\{0\}$. Note that $f'(t) = 0$. Therefore, $\langle f, f\rangle$ = 0 even though $f \neq 0$.
+  \end{parts}
+\end{solution}
 
 \begin{problem}[2-43]
+  Show that for an induced norm $\norm{\cdot}$ over a real vector space, the following hold
+  \begin{parts}
+  \part
+  The parallelogram law
+  \[ \norm{x + y}^2 + \norm{x - y}^2 = 2\norm{x}^2 + 2\norm{y}^2\]
+  \part
+  The polarization identity
+  \[ \langle x, y \rangle = \frac{\norm{x + y}^2 - \norm{x - y}^2}{4}\]
+  \end{parts}
 \end{problem}
 
+\begin{solution}
+  \begin{parts}
+    \part
+    Expanding $\norm{x+y}^2$ and $\norm{x-y}^2$ in terms of the inner product gives us
+    $$
+    \begin{aligned}
+      \norm{x+y}^2 = \langle x,x \rangle + 2\langle x, y\rangle + \langle y, y\rangle \\
+      \norm{x-y}^2 = \langle x,x \rangle - 2\langle x, y\rangle + \langle y, y\rangle
+    \end{aligned}
+    $$
+    Adding these two expressions gives us
+    \[\norm{x+y}^2 + \norm{x-y}^2 = 2\langle x, x\rangle + 2\langle y, y \rangle = 2\norm{x}^2 + 2\norm{y}^2\]
+    \part
+    Using the same expansion from part a gives us
+    $$
+    \begin{aligned}
+      \norm{x+y}^2 = \langle x,x \rangle + 2\langle x, y\rangle + \langle y, y\rangle \\
+      \norm{x-y}^2 = \langle x,x \rangle - 2\langle x, y\rangle + \langle y, y\rangle
+    \end{aligned}
+    $$
+    Now, subtracting these expressions gives us
+    \[ 4\langle x, y\rangle = \norm{x + y}^2 - \norm{x - y}^2\]
+    Which implies
+    \[ \langle x, y\rangle = \frac{\norm{x + y}^2 - \norm{x - y}^2}{4}\]
+  \end{parts}
+\end{solution}
+
 \begin{problem}[2-49]
+  Show that a set of nonzero vectors $\{p_1, p_2, \dots, p_m\}$ that are mutually orthogonal, i.e.
+  \[ \langle p_j, p_k\rangle = 0, \quad \text{if} j\neq k\]
+  are linearly independent.
 \end{problem}
+
+\begin{solution}
+  Suppose that a set of nonzero vectors $\{p_1, p_2, \dots, p_m\}$ are mutually orthogonal. Now assume to the contrary, that they are linearly dependent. Thus there exist scalars $\{\alpha_1, \alpha_2, \dots, \alpha_m\}$ not all zero such that
+  \[\alpha_1 p_1 + \alpha_2 p_2 + \dots + \alpha_m p_m = 0\]
+  Taking the inner product of each side with $p_k$, where $1\leq k \leq m$ gives us that
+  \[ \alpha_k \norm{p_k}^2 = 0\]
+  Since $k$ is arbitrary, we can choose $k$ to match a nonzero $\alpha_k$ and we see that
+  \[ \norm{p_k}^2 = 0\]
+  Thus contradicting our supposition. Therefore, the set is linearly independent.
+\end{solution}
+
 \end{document}
