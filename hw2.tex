@@ -1,0 +1,78 @@
+\documentclass{homework}
+\usepackage{ dsfont }
+
+\name{Timothy Devon Morris}
+\course{EC En 671}
+\term{Fall 2018}
+\hwnum{2}
+
+\begin{document}
+
+\begin{problem}[2-9]
+  Relax the requirement M3 to say
+  \[d(x, y) = 0, \quad \text{if} \quad x = y\]
+  In this fashion, we have defined a \textit{pseudometric}. Let $f: X \rightarrow \mathds{R}$ be an arbitrary function. Show that $d(x, y) = |f(x) - f(y)|$ is a pseudometric.
+\end{problem}
+
+\begin{solution}
+  \begin{parts}
+    \part
+    M1. We note that
+    \[ d(x,y) = |f(x) - f(y)| = |f(y) - f(x)| = d(y,x)|\]
+    \part
+    M2. Since $|f(x) - f(y)| > 0$, we have that $d(x,y) > 0$.
+    \part
+    M3. Suppose $x = y$, since $f$ is a function, we necessarily have that $f(x) = f(y)$. Thus
+    \[d(x,y) = |f(x) - f(y)| = |0| = 0\]
+    \part
+    M4. We apply to triangle inequality and see that
+
+    $$
+    \begin{aligned}
+      d(x,z) &= |f(x) - f(z)| = |f(x) - f(y) + f(y) - f(z)| \\
+    &\leq |f(x) - f(y)| + |f(y) - f(z)| = d(x,y) + d(y,z).
+    \end{aligned}
+    $$
+  \end{parts}
+\end{solution}
+
+\begin{problem}[2-19]
+  If $\lim \sup_{n\rightarrow\infty} a_n= A$ and $\lim \sup_{n\rightarrow\infty} b_n= B$ is it necessarily true that
+  \[\lim \sup_{n\rightarrow\infty} (a_n + b_n) = A + B\]
+\end{problem}
+
+\begin{solution}
+  Consider the sequences 
+  \[a_n = \begin{cases} 
+      0 & n\ \text{odd} \\
+      1 & n\ \text{even}\\
+   \end{cases}
+  \]
+  and
+  \[b_n = \begin{cases} 
+      0 & n\ \text{odd} \\
+      -1 & n\ \text{even}\\
+   \end{cases}
+  \]
+  We quickly seen that $\lim \sup_{n\rightarrow\infty} a_n= 1$ and $\lim \sup_{n\rightarrow\infty} b_n= 0$. But
+  \[ a_n + b_n = 0 \quad \forall n\]
+  Thus, 
+  \[\lim \sup_{n\rightarrow\infty} (a_n + b_n)  = 0 \neq 0 + 1 = 1\]
+  Therefore the above statement is not true.
+\end{solution}
+
+\begin{problem}[2-22]
+\end{problem}
+
+\begin{problem}[2-33]
+\end{problem}
+
+\begin{problem}[2-42]
+\end{problem}
+
+\begin{problem}[2-43]
+\end{problem}
+
+\begin{problem}[2-49]
+\end{problem}
+\end{document}
