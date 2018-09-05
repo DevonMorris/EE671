@@ -10,33 +10,33 @@
 
 \begin{document}
 
-\begin{problem}[2-9]
-  Relax the requirement M3 to say
-  \[d(x, y) = 0, \quad \text{if} \quad x = y\]
-  In this fashion, we have defined a \textit{pseudometric}. Let $f: X \rightarrow \mathds{R}$ be an arbitrary function. Show that $d(x, y) = |f(x) - f(y)|$ is a pseudometric.
-\end{problem}
+%\begin{problem}[2-9]
+  %Relax the requirement M3 to say
+  %\[d(x, y) = 0, \quad \text{if} \quad x = y\]
+  %In this fashion, we have defined a \textit{pseudometric}. Let $f: X \rightarrow \mathds{R}$ be an arbitrary function. Show that $d(x, y) = |f(x) - f(y)|$ is a pseudometric.
+%\end{problem}
 
-\begin{solution}
-  \begin{parts}
-    \part
-    M1. We note that
-    \[ d(x,y) = |f(x) - f(y)| = |f(y) - f(x)| = d(y,x)|\]
-    \part
-    M2. Since $|f(x) - f(y)| > 0$, we have that $d(x,y) > 0$.
-    \part
-    M3. Suppose $x = y$, since $f$ is a function, we necessarily have that $f(x) = f(y)$. Thus
-    \[d(x,y) = |f(x) - f(y)| = |0| = 0\]
-    \part
-    M4. We apply to triangle inequality and see that
+%\begin{solution}
+  %\begin{parts}
+    %\part
+    %M1. We note that
+    %\[ d(x,y) = |f(x) - f(y)| = |f(y) - f(x)| = d(y,x)|\]
+    %\part
+    %M2. Since $|f(x) - f(y)| > 0$, we have that $d(x,y) > 0$.
+    %\part
+    %M3. Suppose $x = y$, since $f$ is a function, we necessarily have that $f(x) = f(y)$. Thus
+    %\[d(x,y) = |f(x) - f(y)| = |0| = 0\]
+    %\part
+    %M4. We apply to triangle inequality and see that
 
-    $$
-    \begin{aligned}
-      d(x,z) &= |f(x) - f(z)| = |f(x) - f(y) + f(y) - f(z)| \\
-    &\leq |f(x) - f(y)| + |f(y) - f(z)| = d(x,y) + d(y,z).
-    \end{aligned}
-    $$
-  \end{parts}
-\end{solution}
+    %$$
+    %\begin{aligned}
+      %d(x,z) &= |f(x) - f(z)| = |f(x) - f(y) + f(y) - f(z)| \\
+    %&\leq |f(x) - f(y)| + |f(y) - f(z)| = d(x,y) + d(y,z).
+    %\end{aligned}
+    %$$
+  %\end{parts}
+%\end{solution}
 
 \begin{problem}[2-19]
   If $\lim \sup_{n\rightarrow\infty} a_n= A$ and $\lim \sup_{n\rightarrow\infty} b_n= B$ is it necessarily true that
@@ -61,6 +61,20 @@
   Thus, 
   \[\lim \sup_{n\rightarrow\infty} (a_n + b_n)  = 0 \neq 0 + 1 = 1\]
   Therefore the above statement is not true.
+\end{solution}
+
+\begin{problem}[2-20]
+  Show that if $\{x_n\}$ is a sequence such that 
+  \[ d(x_{n+1}, x_n) < Cr^n\]
+  for $0 \leq r < 1$, then $\{x_n\}$ is a Cauchy sequence
+\end{problem}
+
+\begin{solution}
+  Given $\epsilon > 0$, choose $N > \log{(\epsilon(1-r)/C)}/\log{r}$. Without loss of generality, let $n > m \geq N$ Thus we have
+  \[d(x_m, x_n) \leq d(x_m, x_{m+1}) + d(x_{m+1}, x_{m+2}) + \dots + d(x_{n-1}, x_{n}) \leq \sum_{i = m}^{\infty} d(x_{i}, x_{i+1})\]
+  Using the identities for the infinite geometric series, (we can only do this because the series is absolutely convergent).
+  \[d(x_m, x_n) \leq Cr^m\sum_{i=0}^{\infty} r^i < Cr^N\sum_{i=0}^{\infty} r^i = \frac{Cr^N}{1 - r} < \epsilon \]
+  
 \end{solution}
 
 \begin{problem}[2-22]
