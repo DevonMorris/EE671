@@ -1,4 +1,5 @@
 \documentclass{homework}
+\usepackage{ dsfont }
 
 \name{Timothy Devon Morris}
 \course{EC En 671}
@@ -50,9 +51,26 @@
 \end{solution}
 
 \begin{problem}[2-30]
+  Let $S$ denote the subset  of all solutions to the following differential equation defined of $C^3[0, \infty)$
+  \[ \frac{d^3x}{dt^3} + b\frac{d^2x}{dt^2} + c\frac{dx}{dt} + dx = 0\]
+  Show that $S$ is a linear subspace of $C^3[0, \infty)$
 \end{problem}
 
 \begin{solution}
+  Asssume that $x,y \in S$. It is sufficient to show that $\alpha x + \beta y \in S$ for $\alpha, \beta \in \mathds{R}$.
+  Since, the derivative is a linear operator, the proof is straight-forward.
+
+  $
+  \begin{aligned}
+    &\frac{d^3}{dt^3}(\alpha x + \beta y) + b\frac{d^2}{dt^2}(\alpha x + \beta y) + c\frac{d}{dt}(\alpha x + \beta y) + d(\alpha x + \beta y) = \\
+    &\frac{d^3}{dt^3}(\alpha x) + b\frac{d^2}{dt^2}(\alpha x) + c\frac{d}{dt}(\alpha x) + d(\alpha x) + \frac{d^3}{dt^3}(\beta y) + b\frac{d^2}{dt^2}(\beta y) + c\frac{d}{dt}(\beta y) + d(\beta y) = \\
+    &\alpha\frac{dx^3}{dt^3} + \alpha b\frac{dx^2}{dt^2} + \alpha c\frac{d}{dt} + \alpha dx + \beta \frac{dy^3}{dt^3} + \beta b\frac{dy^2}{dt^2} + c\frac{dy}{dt} + \beta d y = \\
+    &\alpha\left(\frac{d^3x}{dt^3} + b\frac{d^2x}{dt^2} + c\frac{dx}{dt} + dx\right) + \beta\left(\frac{d^3y}{dt^3} + b\frac{d^2y}{dt^2} + c\frac{dy}{dt} + dy\right) = \\
+    &\alpha 0 + \beta 0 = 0
+  \end{aligned}
+  $
+  Where the second to last line follows from the definition of $S$.
+
 \end{solution}
 
 \end{document}
