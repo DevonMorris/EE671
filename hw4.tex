@@ -1,0 +1,65 @@
+\documentclass{homework}
+\usepackage{ dsfont }
+\usepackage{ mathtools }
+\usepackage{ commath }
+\usepackage[final]{ pdfpages }
+
+\name{Timothy Devon Morris}
+\course{EC En 671}
+\term{Fall 2018}
+\hwnum{3}
+
+\begin{document}
+
+\begin{problem}[3-3]
+  Consider the set of data
+  \[ x = \{2,2.5,3,5,9\} \quad y = \{-4.2,-5.2,1,24.4\} \]
+  \begin{parts}
+   \part
+   Make a plot of the data
+   \part
+   Determine the best least-squares line that fits this data and plot the line
+   \part
+   Assuming that the first and last points are believed to be the most accurate, formulate a weighting matrix and compute a weighted least-squares line that fits the data. Plot this line.
+  \end{parts}
+\end{problem}
+
+\begin{problem}
+  Formulate the regression $y \approx ce^{ax}$ as a linear regression problem, with regression parameters c and a. 
+\end{problem}
+
+\begin{solution}
+  The best way to make this problem linear is to take the log. Thus we have
+  \[\log(y) \approx \log(c) + ax\]
+  Now this problem is linear in $a$ and $\log(c)$.
+  Thus we have the linear setup as
+  $$
+  \begin{bmatrix}
+    1 & x_1 \\
+    1 & x_2 \\
+    \vdots \\
+    1 & x_m
+  \end{bmatrix}
+  \begin{bmatrix}
+    \log(c) \\
+    a 
+  \end{bmatrix}
+  +
+  \begin{bmatrix}
+   e_1 \\
+   e_2 \\
+   \vdots \\
+   e_n
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    \log(y_1) \\
+    \log(y_2) \\
+    \vdots \\
+    \log(y_m)
+  \end{bmatrix}
+  $$
+  This can be solved using the typical normal (projection) equations.
+\end{solution}
+
+\end{document}
