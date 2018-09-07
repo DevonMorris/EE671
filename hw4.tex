@@ -13,7 +13,7 @@
 
 \begin{problem}[3-3]
   Consider the set of data
-  \[ x = \{2,2.5,3,5,9\} \quad y = \{-4.2,-5.2,1,24.4\} \]
+  \[ x = \{2,2.5,3,5,9\} \quad y = \{-4.2,-5,2,1,24.4\} \]
   \begin{parts}
    \part
    Make a plot of the data
@@ -23,6 +23,12 @@
    Assuming that the first and last points are believed to be the most accurate, formulate a weighting matrix and compute a weighted least-squares line that fits the data. Plot this line.
   \end{parts}
 \end{problem}
+
+\begin{solution}
+
+  \includepdf[pages=-]{hw4prob1.pdf} 
+
+\end{solution}
 
 \begin{problem}[3-6]
   Formulate the regression $y \approx ce^{ax}$ as a linear regression problem, with regression parameters c and a. 
@@ -67,7 +73,98 @@ Define an inner product between matrices $X$ and $Y$ as
 \[\langle X, Y\rangle = tr(XY^H)\]
 Where $tr$ is the sum of the diagonal elements. We want to approximate the matrix $Y$ by the scalar linear combination of matrices $X_1, X_2, \dots, X_m$, as
 \[ Y = c_1X_1 + c_2X_2 + \dots + c_mX_m + E\]
-Using the orthogonality principle, determine a set of normal equations that can be used to find $c_1, c_2, \dots, c_m$ that minimize teh induced norm of $E$.
+Using the orthogonality principle, determine a set of normal equations that can be used to find $c_1, c_2, \dots, c_m$ that minimize the induced norm of $E$.
 \end{problem}
+
+\begin{solution}
+  Using the orthogonality principle we arrive at the following equations
+  $$
+  \begin{bmatrix}
+    tr(X_1X_1^H) & tr(X_2X_1^H) & \dots & tr(X_mX_1) \\ 
+    tr(X_1X_2^H) & tr(X_2X_2^H) & \dots & tr(X_mX_2) \\ 
+    \vdots & & \vdots \\
+    tr(X_1X_m^H) & tr(X_2X_m^H) & \dots & tr(X_mX_m^H)
+  \end{bmatrix}
+  \begin{bmatrix}
+   c_1 \\
+   c_2 \\
+   \vdots \\
+   c_m
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+    tr(YX_1^H) \\
+    tr(YX_2^H) \\
+    \vdots \\
+    tr(YX_m^H) 
+  \end{bmatrix}
+  $$
+\end{solution}
+
+\begin{problem}[3-12]
+  For the data squence $\{1, 1, 2, 3, 5, 8, 13\}$:
+  \begin{parts}
+    \part
+    Write down the data matrix $A$ and the grammian $A^HA$ using the (i) the covariance, and the (ii) autocorrelation methods.
+    \part
+    We desire to use this sequence to train a simple linear predictor. The "desired signal" $d[t]$ is the value of $x[t]$, and the data used are the two prior samples. That is,
+    \[x[t] = a_1x[t-1] + a_2x[t-2] + e[t],\]
+    where $e[t]$ is the prediction error. Determine the least-squares coefficients for the predictor using the covariance and autocorrelation methods
+    \part
+    Determine the minimum least-squares error for both methods
+  \end{parts}
+\end{problem}
+
+\begin{solution}
+ \begin{parts}
+   \part
+   (i) using the covariance method our data matrix becomes
+   $$
+   A = 
+   \begin{bmatrix}
+    1 &  1 \\
+    2 &  1 \\
+    3 &  2 \\
+    5 & 3 \\
+    8 &  5 
+   \end{bmatrix}
+   $$
+   With a grammian
+   $$
+   A^HA = 
+   \begin{bmatrix}
+     103 & 64 \\
+     64 & 40
+   \end{bmatrix}
+   $$
+   (ii) using the autocorrelation method our data matrix becomes
+   $$
+   A^HA = 
+   \begin{bmatrix}
+     1 & 0 \\
+     1 & 1 \\
+     2 & 1 \\
+     3 & 2 \\
+     5 & 3 \\
+     8 & 5 \\
+     13 & 8 
+   \end{bmatrix}
+   $$
+   With a grammian
+   $$
+   A^HA = 
+   \begin{bmatrix}
+     104 & 64 \\
+     64 & 40
+   \end{bmatrix}
+   $$
+   \part
+   (i) The least-squares estimate is $c_1 = 1 \quad c_2 = 1$.
+   (ii) the least-squares estimate is $c_1 = 1 \quad c_2 = 1$.
+   \part
+   Since this is the fibbonaci sequence, and the coefficients are in fact $c_1 = 1 \quad c_2 = 1$ the error is zero!
+   
+ \end{parts} 
+\end{solution}
 
 \end{document}
