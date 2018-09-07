@@ -1,0 +1,73 @@
+\documentclass{homework}
+\usepackage{ dsfont }
+\usepackage{ mathtools }
+\usepackage{ commath }
+\usepackage[final]{ pdfpages }
+
+\name{Timothy Devon Morris}
+\course{EC En 671}
+\term{Fall 2018}
+\hwnum{5}
+
+\begin{document}
+\begin{problem}
+  Write the differential equation
+  \[\dddot{x}(t) - 2\ddot{x}(t) - \dot{x}(t) = b(t)\]
+  in operator form
+\end{problem}
+
+\begin{solution}
+  Let 
+  \[ A = \frac{d^3}{dt^3} - 2 \frac{d^2}{dt^2} - \frac{d}{dt} \]
+  Then we have the equation
+  \[ Ax(t) = b(t)\]
+\end{solution}
+
+\begin{problem}
+  Determine the $l_1,l_2,$ Frobenius, and $l_{\infty}$ norms of the following matrices
+  \[ A_1 =
+    \begin{bmatrix}
+      4 & 3 \\
+      3 & 6
+    \end{bmatrix}
+    \quad 
+    A_1 =
+    \begin{bmatrix}
+      1 & 2 \\
+      3 & 0
+    \end{bmatrix}
+    \quad
+    A_1 =
+    \begin{bmatrix}
+      1 & 2 \\
+      0 & 1
+    \end{bmatrix}
+  \]
+\end{problem}
+
+\begin{solution}
+  $A_1$
+  \[ l_1: 9 \quad l_2: 8.1622 \quad \text{Frobenius}: \sqrt{70} \quad l_\infty: 9\]
+  $A_2$
+  \[ l_1: 4 \quad l_2: 3.2566 \quad \text{Frobenius}: \sqrt{14} \quad l_\infty: 3\]
+  $A_3$
+  \[ l_1: 3 \quad l_2: 3.2566 \quad \text{Frobenius}: \sqrt{14} \quad l_\infty: 2.414\]
+\end{solution}
+
+\begin{problem}
+  Show that for a square matrix $F$ with $\norm{F}$ and norm satisfying the submultiplicative property,
+ \[ \norm{(I - F)^{-1}} \leq \frac{1}{1 - \norm{F}} \]
+\end{problem}
+
+\begin{solution}
+  Using the neumann series, we have that 
+  \[ \norm{(I-F)^{-1}} = \norm{ \sum^{\infty}_{i=0} F^i} \]
+  Repeated application of the triangle inequality gives
+  \[ \norm{(I-F)^{-1}} \leq \sum^{\infty}_{i=0} \norm{F^i} \]
+  The submiltiplicative property gives us
+  \[ \norm{(I-F)^{-1}} \leq \sum^{\infty}_{i=0} \norm{F}^i \]
+  Once again using the geometric series for scalars, we have
+  \[ \norm{(I-F)^{-1}} \leq \frac{1}{1 - \norm{F}} \]
+\end{solution}
+
+\end{document}
