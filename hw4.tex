@@ -24,7 +24,7 @@
   \end{parts}
 \end{problem}
 
-\begin{problem}
+\begin{problem}[3-6]
   Formulate the regression $y \approx ce^{ax}$ as a linear regression problem, with regression parameters c and a. 
 \end{problem}
 
@@ -59,7 +59,15 @@
     \log(y_m)
   \end{bmatrix}
   $$
-  This can be solved using the typical normal (projection) equations.
+  This can be solved using the typical normal (projection) equations. Note, there are some nuances to this problem, if you think $ce^{ax}$ is a good model candidate, the data should either all be negative or positive. If the data is all negative, the $y$ need to be negated before taking the log.
 \end{solution}
+
+\begin{problem}[3-10]
+Define an inner product between matrices $X$ and $Y$ as 
+\[\langle X, Y\rangle = tr(XH^H)\]
+Where $tr$ is the sum of the diagonal elements. We want to approximate the matrix $Y$ by the scalar linear combination of matrices $X_1, X_2, \dots, X_m$, as
+\[ Y = c_1X_1 + c_2X_2 + \dots + c_mX_m + E\]
+Using the orthogonality principle, determine a set of normal equations that can be used to find $c_1, c_2, \dots, c_m$ that minimize teh induced norm of $E$.
+\end{problem}
 
 \end{document}
