@@ -10,7 +10,7 @@
 \hwnum{5}
 
 \begin{document}
-\begin{problem}
+\begin{problem}[4-1]
   Write the differential equation
   \[\dddot{x}(t) - 2\ddot{x}(t) - \dot{x}(t) = b(t)\]
   in operator form
@@ -23,7 +23,7 @@
   \[ Ax(t) = b(t)\]
 \end{solution}
 
-\begin{problem}
+\begin{problem}[4-4]
   Determine the $l_1,l_2,$ Frobenius, and $l_{\infty}$ norms of the following matrices
   \[ A_1 =
     \begin{bmatrix}
@@ -54,7 +54,7 @@
   \[ l_1: 3 \quad l_2: 3.2566 \quad \text{Frobenius}: \sqrt{14} \quad l_\infty: 2.414\]
 \end{solution}
 
-\begin{problem}
+\begin{problem}[4-10]
   Show that for a square matrix $F$ with $\norm{F}$ and norm satisfying the submultiplicative property,
  \[ \norm{(I - F)^{-1}} \leq \frac{1}{1 - \norm{F}} \]
 \end{problem}
@@ -68,6 +68,52 @@
   \[ \norm{(I-F)^{-1}} \leq \sum^{\infty}_{i=0} \norm{F}^i \]
   Once again using the geometric series for scalars, we have
   \[ \norm{(I-F)^{-1}} \leq \frac{1}{1 - \norm{F}} \]
+\end{solution}
+
+\begin{problem}[4-15]
+  Show that $\norm{A}_F^2 = tr(A^HA)$ 
+\end{problem}
+
+\begin{solution}
+  We will start with the trace operation
+  \[ tr(A^HA) = \sum_{i} [A^HA]_{ii} = \sum_{i} \sum_{k} [A^H]_{ik}[A]_{ki} = \sum_{i} \sum_{k} \bar{a}_{ki} a_{ki} = 
+  \sum_{i} \sum_{k} |a_{ki}|^2 = \norm{A}_F^2\]
+\end{solution}
+
+\begin{problem}[4-25]
+  Show that $(A^*)^{-1} = (A^{-1})^*$ assuming that he inverse exists.
+\end{problem}
+
+\begin{solution}
+  We begin by noting that in hilbert spaces $A^{**} = A$. Thus we have that
+  \[ \langle A^*(A^{-1})^*x, y \rangle = \langle (A^{-1})^*x, Ay\rangle = \langle x, A^{-1}Ay\rangle\ = \langle x, y\rangle\]
+  Thus we have that  $A^{*}(A^{-1})^* = I$. Similarly, we have that
+  \[ \langle (A^{-1})^*A^*x, y \rangle = \langle (A^*x, A^{-1}y\rangle = \langle x, AA^{-1}y\rangle\ = \langle x, y\rangle\]
+  Thus we have that  $(A^{-1})^*A^* = I$. Therefore we have that $(A^*)^{-1} = (A^{-1})^*$.
+\end{solution}
+
+\begin{problem}[4-29]
+  Determine the 4 fundamental subspaces of 
+  \[A =
+    \begin{bmatrix}
+      1 & 4 \\
+      2 & 8 \\
+      3 & 12 \\
+    \end{bmatrix}
+  \]
+\end{problem}
+
+\begin{solution}
+
+  $$
+  \mathcal{R}(A) = \text{span} \left\{
+    \begin{bmatrix}
+     1 \\
+     2 \\
+     3
+    \end{bmatrix}
+  \right\}
+  $$
 \end{solution}
 
 \end{document}
