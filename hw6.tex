@@ -1,0 +1,83 @@
+\documentclass{homework}
+\usepackage{ dsfont }
+\usepackage{ mathtools }
+\usepackage{ commath }
+\usepackage[final]{ pdfpages }
+
+\name{Timothy Devon Morris}
+\course{EC En 671}
+\term{Fall 2018}
+\hwnum{6}
+
+\begin{document}
+
+\begin{problem}[4-36]
+  If $AB = 0$ for matrices $A$ and $B$, show that $\mathcal{R}(B)  \subset \mathcal{N}(A)$
+\end{problem}
+
+\begin{solution}
+  Suppose that $AB = 0$. Let $y \in \mathcal{R}(B)$. Thus, there exists an $x$ such that $y = Bx$. Now consider $Ay$.
+  \[ Ay = ABx = 0x = 0\]
+  Thus we have that $y \in \mathcal{N}(A)$. Therefore $\mathcal{R}(B) \subset \mathcal{N}(A)$.
+\end{solution}
+
+\begin{problem}[4-39]
+  Show that $\kappa(AB) \leq \kappa(A)\kappa(B)$, and that $\kappa(\alpha A) = \kappa(A)$.
+\end{problem}
+
+\begin{solution}
+  Assuming that $\norm{\cdot}$ is a norm that obeys the submultiplicative property, we have that
+  \[ \kappa(AB) = \norm{AB}\norm{(AB)^{-1}} \leq \norm{A}\norm{B}\norm{B^{-1}}\norm{A^{-1}} = 
+  \kappa(A)\kappa(B)\]
+  We also have that
+  \[ \kappa(\alpha A) = \norm{\alpha A}\norm{(\alpha A)^{-1}} = 
+  |\alpha| \norm{A} |\alpha^{-1}|\norm{A^{-1}} = 
+|\alpha||\alpha|^{-1} \kappa(A) = \kappa(A)\]
+\end{solution}
+
+\begin{problem}[4-42]
+  Show that (4.30) is true
+\end{problem}
+
+\begin{solution}
+  Following the logic of (4-28) we have that
+  $$
+  \begin{aligned}
+    x &= [I - \epsilon A^{-1}E]A^{-1}(b + \epsilon e) + O(\norm{\epsilon E }^2) \\
+            &= x_0 - \epsilon A^{-1}Ex_0 + \epsilon A^{-1} e - \epsilon^2 A^{-1}EA^{-1}e + O(\norm{\epsilon E}^2) \\
+            &= x_0 - \epsilon A^{-1}Ex_0 + \epsilon A^{-1} e + O(\epsilon^2)
+  \end{aligned}
+  $$
+  If we take the norm and apply the triangle inequality and definition of operator norm we get
+  $$
+  \begin{aligned}
+    \norm{x - x_0} &\leq \epsilon \frac{\norm{A}\norm{A^{-1}}}{\norm{A}}\norm{E}\norm{x_0} + \epsilon \frac{\norm{A}\norm{A^{-1}}}{\norm{A}}\norm{e} + O(\epsilon^2)\\
+                   &= \kappa(A)\left(\rho + \epsilon\frac{\norm{e}}{\norm{A}} \right) + O(\epsilon^2)
+  \end{aligned}
+  $$
+  Now note that our "true" solution dictates that $Ax_0 = b$. Using the operator norm we have that $\norm{A}\norm{x_0} \geq \norm{b}$. This implies that $\frac{\norm{x_0}}{\norm{b}} \geq \frac{1}{\norm{A}}$.
+  Thus we have
+  \[ \frac{\norm{x - x_0}}{\norm{x_0}} \leq \kappa(A)\left(\rho + \epsilon \frac{\norm{e}}{\norm{b}}\right) + O(\epsilon^2) = \kappa(A)(\rho + \rho_b) + O(\epsilon^2)\]
+\end{solution}
+
+\begin{problem}[4-51]
+  In many RLS applications, it is desirable to weight the error, so that more recent error terms count for more. The total squared error is computed as
+  \[ E[t] = \sum_{i=0}^{n}  \lambda^{t-i}|e[i]|^2\]
+  Where $\lambda$ is a constant less than 1. This weighting leads to a Grammian matrix and correlation vector
+  \[R[t] = \sum^{t}_{i=0} \lambda^{t-i}q[i]q^H[i] \quad p[t] = \sum^{t}_{i=1} \lambda^{t-i}q^H[i]d[t]\]
+  Show that under this weighting, the RLS algorithm can be expressed as
+  \[
+    \begin{aligned}
+      k[t] &= \frac{\lambda^{-1}P[t-1]q[t]}{1 + \lambda^{-1}q^H[t]P[t-1]q[t]} \\
+      P[t] &= \lambda^{-1}P[t-1] - \lambda^{-1}k[t]q^H[t]P[t-1] \\
+      \epsilon[t] &= d[t] - q^H[t]h[t-1] \\
+      h[t] &= h[t-1] + k[t]\epsilon[t]
+    \end{aligned}
+  \]
+\end{problem}
+
+\begin{solution}
+  
+\end{solution}
+
+\end{document}
