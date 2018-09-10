@@ -62,9 +62,9 @@
 
 \begin{problem}[4-51]
   In many RLS applications, it is desirable to weight the error, so that more recent error terms count for more. The total squared error is computed as
-  \[ E[t] = \sum_{i=0}^{n}  \lambda^{t-i}|e[i]|^2\]
+  \[ E[t] = \sum_{i=1}^{n}  \lambda^{t-i}|e[i]|^2\]
   Where $\lambda$ is a constant less than 1. This weighting leads to a Grammian matrix and correlation vector
-  \[R[t] = \sum^{t}_{i=0} \lambda^{t-i}q[i]q^H[i] \quad p[t] = \sum^{t}_{i=1} \lambda^{t-i}q^H[i]d[t]\]
+  \[R[t] = \sum^{t}_{i=1} \lambda^{t-i}q[i]q^H[i] \quad p[t] = \sum^{t}_{i=1} \lambda^{t-i}q^H[i]d[t]\]
   Show that under this weighting, the RLS algorithm can be expressed as
   \[
     \begin{aligned}
@@ -77,6 +77,118 @@
 \end{problem}
 
 \begin{solution}
+  Following the basic outline of section 4.11.1 we have
+  \[ h[t] = R^{-1}[t]p[t] \]
+  Rewriting R[t] we see that
+  \[ R[t] = \sum^{t-1}_{i=1} \lambda^{t-i}q[i]^Hq[i] + q[t]q^H[t] = \lambda\sum^{t-1}_{i=1} \lambda^{t - 1 - i}q[i]^Hq[i] + q[t]q^H[t] = \lambda R[t-1] + q[t]q^H[t]\]
+  Using the Sherman-Morrison formula, we have
+  \[ 
+    R[t]^{-1} = \lambda^{-1}R[t-1]^{-1} - \frac{\lambda^{-2}R^{-1}[t-1]q[t]q^H[t]R^{-1}[t-1]}{1 + \lambda^{-1}q^{H}[t]R^{-1}[t-1]q[t]} 
+  \]
+  So following the book let $P[t] = R[t]^{-1}$. Now let
+  \[
+    k[t] = \frac{\lambda^{-1}P[t-1]q[t]}{1 + \lambda^{-1}q^{H}[t]P[t-1]q[t]}.
+  \]
+  Then substituting $k[t]$ and $P[t]$ into the above equation, we have
+  \[
+    P[t] = \lambda^{-1}P[t-1] - \lambda^{-1}k[t]q^{H}[t]P[t-1]
+  \]
+  Thus we have that
+  \[ 
+    h[t] = P[t]p[t] = P[t](\lambda p[t-1] + q[t]d[t])
+  \]
+  Consider $P[t]p[t-1]$
+  \[ P[t]p[t-1] = \lambda^{-1}P[t-1]p[t-1] + \lambda^{-1}k[t]q^H[t]P[t-1]p[t-1] = \lambda^{-1}h[t-1] - \lambda^{-1}k[t]q^H[t]h[t-1]\]
+  Now we note that 
+  \[ 
+    \begin{aligned}
+      P[t]q[t] &= (\lambda^{-1}P[t-1] - \lambda^{-1}k[t]q^{H}[t]P[t-1])q[t] \\
+               &= \lambda^{-1}P[t-1]q[t] - \lambda^{-1}\frac{\lambda^{-1}P[t-1]q[t]q^H[t]P[t-1]q[t]}{1 + \lambda^{-1}q^{H}[t]P[t-1]q[t]}\\
+               &= \frac{\lambda^{-1}P[t-1]q[t](1 + \lambda^{-1}q^H[t]P[t-1]q[t]) -\lambda^{-2}P[t-1]q[t]q^H[t]P[t-1]q[t]}{1 + \lambda^{-1}q^H[t]P[t-1]q[t]} \\
+               &= k[t]
+    \end{aligned} \]
+  Therefore, we have that
+  \[ 
+    \begin{aligned}
+      h[t] &= h[t-1] - k[t]q^H[t]h[t-1] + P[t]q[t]d[t] \\
+           &= h[t-1] - k[t]q^H[t]h[t-1] + k[t]d[t]) \\
+           &= h[t-1] + k[t](d[t] - q^H[t]h[t-1])
+    \end{aligned}
+  \]
+
+  Thus let $\epsilon[t] = d[t] - q^H[t]h[t-1]$ and we have
+  \[ h[t] = h[t-1] + k[t]\epsilon[t] \]
+\end{solution}
+
+\begin{problem}[4-56]
+ Show that if $A$ is partitioned as 
+ \[
+ \begin{bmatrix}
+   A_{11} & A_{12} \\
+   A_{21} & A_{22}
+ \end{bmatrix}
+ \]
+ Then 
+ \[A^{-1} = 
+   \begin{bmatrix}
+     A_{11}^{-1} + A_{11}^{-1}A_{12}S^{-1}A_{21}A_{11}^{-1} & -A_{11}^{-1}A_{12}S^{-1} \\
+     -S^{-1}A_{21}A_{11}^{-1} & S^{-1}
+   \end{bmatrix}
+ \]
+ Where $S$ is the schur complement $S = A_{22} - A_{21}A_{11}^{-1}A_{12}$.
+\end{problem}
+
+\begin{solution}
+  This is easily shown by straightforward matrix multiplication
+  \[ \begin{aligned}
+      AA^{-1} &= 
+   \begin{bmatrix}
+     A_{11} & A_{12} \\
+     A_{21} & A_{22}
+   \end{bmatrix}
+   \begin{bmatrix}
+     A_{11}^{-1} + A_{11}^{-1}A_{12}S^{-1}A_{21}A_{11}^{-1} & -A_{11}^{-1}A_{12}S^{-1} \\
+     -S^{-1}A_{21}A_{11}^{-1} & S^{-1}
+   \end{bmatrix} \\
+   &=
+   \begin{bmatrix}
+     I + A_{12}S^{-1}A_{21}A_{11}^{-1} - A_{12}S^{-1}A_{21}A_{11}^{-1} & -A_{12}S^{-1} + A_{12}S^{-1} \\
+     A_{21}A_{11}^{-1} + A_{21}A_{11}^{-1}A_{12}S^{-1}A_{21}A_{11}^{-1} - A_{22}S^{-1}A_{21}A_{11}^{-1} & -A_{21}A_{11}^{-1}A_{12}S^{-1} + A_{22}S^{-1}
+   \end{bmatrix} \\
+   &=
+   \begin{bmatrix}
+     I & 0 \\
+     A_{21}A_{11}^{-1} - SS^{-1}A_{21}A_{11}^{-1} & SS^{-1}
+   \end{bmatrix} \\
+   &= I
+  \end{aligned} 
+  \]
+  Similarly, we have that
+  \[
+    \begin{aligned}
+      A^{-1}A &=
+   \begin{bmatrix}
+     A_{11}^{-1} + A_{11}^{-1}A_{12}S^{-1}A_{21}A_{11}^{-1} & -A_{11}^{-1}A_{12}S^{-1} \\
+     -S^{-1}A_{21}A_{11}^{-1} & S^{-1}
+   \end{bmatrix} 
+   \begin{bmatrix}
+     A_{11} & A_{12} \\
+     A_{21} & A_{22}
+   \end{bmatrix} \\
+   &=
+   \begin{bmatrix}
+     I & A_{11}^{-1}A_{12} + A_{11}^{-1}A_{12}S^{-1}A_{21}A_{11}^{-1}A_{12} - A_{11}^{-1}A_{12}S^{-1}A_{21} \\
+     -S^{-1}A_{21} + S^{-1}A_{21} & -S^{-1}A_{21}A_{11}^{-1}A_{12} + S^{-1}A_{22}
+   \end{bmatrix} \\
+   &=
+   \begin{bmatrix}
+     I & A_{11}^{-1}A_{12} - A_{11}^{-1}A_{12}S^{-1}S \\
+     0 & S^{-1}S
+   \end{bmatrix} \\
+   &= I
+    \end{aligned}
+  \]
+  Therefore, we have the correct inverse.
   
 \end{solution}
 
