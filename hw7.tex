@@ -234,6 +234,10 @@
 \begin{solution}
   Note we have that 
 \[ R_{yy} = \frac{1}{n} HXX^TH^T = HR_{xx}H^T = I\]
+  Now we note that $R_{xx}$ must be positive definite, and therefore has an inverse. It also has a cholesky decomposition. Thus we have 
+  \[ R_{xx}^{-1} = (LL^H)^{-1} = L^{-H}L^{-1}\]
+  Therefore, let $H = L^{-1}$, and we have that
+  \[R_{yy} = L^{-1}R_{xx}L^{-H} = L^{-1}LL^{H}L^{-H} = I\]
 \end{solution}
 
 \end{document}
