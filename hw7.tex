@@ -240,4 +240,58 @@
   \[R_{yy} = L^{-1}R_{xx}L^{-H} = L^{-1}LL^{H}L^{-H} = I\]
 \end{solution}
 
+\begin{problem}[5-17]
+  Show that if $Q = Q_1 + jQ_2$ is unitary where, $Q_i \in R^{m \times m}$, then the $2m \times 2m$ matrix
+  \[
+    Z=
+    \begin{bmatrix}
+      Q_1 & -Q_2 \\
+      Q_2 & Q_1
+    \end{bmatrix}
+  \]
+\end{problem}
+
+\begin{solution}
+  First we know that $QQ^H = I$, so therefore we have that
+  \[
+    \begin{aligned}
+      QQ^H &= (Q_1 + jQ_2)(Q_1 + jQ_2)^H \\
+           &= (Q_1 + jQ_2)(Q_1^T - jQ_2^T) \\
+           &= Q_1Q_1^T + Q_2Q_2^T + j(Q_2Q_1^T - Q_1Q_2^T) \\ 
+           &= I
+    \end{aligned}
+  \]
+  Thus we have that $Q_2Q_1^T - Q_1Q_2^T = 0$. Now consider the matrix $ZZ^T$
+  \[
+    \begin{aligned}
+    ZZ^T &=
+    \begin{bmatrix}
+      Q_1 & -Q_2 \\
+      Q_2 & Q_1
+    \end{bmatrix}
+    \begin{bmatrix}
+      Q_1^T & Q_2^T \\
+      -Q_2^T & Q_1^T
+    \end{bmatrix} \\
+    &=
+    \begin{bmatrix}
+      Q_1Q_1^T + Q_2Q_2^T & Q_1Q_2^T - Q_2Q_1^T \\ 
+      Q_2Q_1^T - Q_1Q_2^T & Q_2Q_2^T + Q_1Q_1^T
+    \end{bmatrix} \\
+    &=
+    \begin{bmatrix}
+      I & 0 \\ 
+      0 & I
+    \end{bmatrix} = I
+    \end{aligned}
+  \]
+  Therefore, the matrix $Z$ is orthogonal.
+\end{solution}
+
+\begin{problem}[5-22]
+  In this problem you will demonstrate the direct computation of the pseudioinverse is numerically inferior to coputation using a matrix factorization such at the QR or Cholesky factorization. Suppose it is desired to find the least-squares solution to 
+  \[
+  \]
+\end{problem}
+
 \end{document}
