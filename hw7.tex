@@ -197,8 +197,8 @@
     P_{23}P_{21}V = 
     \begin{bmatrix}
       1 & 0 & 0 \\
-      0.66 & 1 & 0 \\
-      0.33 & -2.08e-5 & 1 
+      0.666 & 1 & 0 \\
+      0.333 & -2.08e-5 & 1 
     \end{bmatrix}
   \]
   So to get the correct decomposition, we have to apply this permutation to the vector and we get $[33.002\ -21\ -5]$.
@@ -207,9 +207,33 @@
     \begin{aligned}
       y_1 &= 33.002 \approx 33.0 \\
       y_2 &= -21 - 0.666(33.0) \approx -43.0 \\
-      y_3 &= -5 -43.0(-2.08e-5)
+      y_3 &= -5 -43.0(-2.08e-5) -0.333(33) \approx -16
     \end{aligned}
   \]
+  Now we use back substitution to solve for $x$
+  \[
+    \begin{aligned}
+      x_3 &= -16/(-5.33) \approx 3 \\
+      x_2 &= \frac{1}{-16.0}(-43.0 - (-3.66)*3) \approx 2 \\
+      x_1 &= \frac{1}{6}(33 - 12.001(2) - 3(1)) \approx 1
+    \end{aligned}
+  \]
+  This is the correct answer. This problem demonstrates the numerical stability when we properly use pivoting with the LU decomposition.
+\end{solution}
+
+\begin{problem}[5-8]
+  Let $X = [x_1,x_2,\dots,x_n]$ be a set of real-valued zero-mean data, with correlation matrix
+  \[R_{xx} = \frac{1}{n} XX^T\]
+  Determine a transformation on $X$ that produces the a data set $Y$,
+  \[ Y = HX\]
+  Such that 
+  \[R_{yy} = \frac{1}{n}YY^T\]
+  is equal to the identity.
+\end{problem}
+
+\begin{solution}
+  Note we have that 
+\[ R_{yy} = \frac{1}{n} HXX^TH^T = HR_{xx}H^T = I\]
 \end{solution}
 
 \end{document}
