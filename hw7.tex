@@ -1,0 +1,124 @@
+\documentclass{homework}
+\usepackage{ dsfont }
+\usepackage{ mathtools }
+\usepackage{ commath }
+\usepackage[final]{ pdfpages }
+
+\name{Timothy Devon Morris}
+\course{EC En 671}
+\term{Fall 2018}
+\hwnum{7}
+
+\begin{document}
+
+\begin{problem}[5-3]
+ Verify the following facts about triangular matrices
+ \begin{parts}
+   \part
+   The inverse of an upper-triangular matrix is upper triangular. The inverse of a lower-triangular matrix is lower triangular.
+   \part The product of two upper-triangular matrices  is upper triangular.
+ \end{parts}
+\end{problem}
+
+\begin{solution}
+  \begin{parts}
+    \part
+    Let $A$ be an upper triangular matrix. Note the determinant of a triangular matrix is the product of the diagonal elements. Therefore, we can assume that the diagonal elements are nonzero. Therefore we can factor $A$
+    \[ A = D(I + U)\]
+    Where, $D$ is diagonal and nonzero, and $U$ is strictly upper triangular. Thus we have that
+    \[ A^{-1} = (I+U)^{-1}D^{-1}\]
+    Using the neumann series we have
+    \[ A^{-1} = \left(\sum_{k=0}^{\infty}(-1)^kU^k\right)D^{-1}\]
+    Now we note that the product of upper-triangular matrices is upper triangular, and the sum of upper-triangular matrices is upper triangular. Therefore, we have that $A^{-1}$ must be upper triangular. 
+    
+    The proof for lower-triangular matrices is identical, just with the assumption that $A = D(I+L)$, where $L$ is stricly lower triangular.
+    \part We used this result part (a). Assume that $A$, $B$ are upper triangular. It suffices to show that $AB_{ij} = 0 \ \text{for}\ i > j$. Thus, let $i > j$ and we have
+    \[AB_{ij} = \sum_{k=1}^{m} A_{ik}B_{kj} = \sum^{m}_{k=i}A_{ik}B_{kj} = \sum^{j}_{k=i}A_{ik}B_{kj} = 0 \]
+    Therefore, $AB$ is upper triangular.
+  \end{parts}
+\end{solution}
+
+\begin{problem}[5-4]
+ This exercise illustrates the potential difficult of LU factorization without pivoting. Supposed it is desired to solve the system of equations
+ \[
+   \begin{bmatrix}
+     2 & 4 & -5 \\
+     6 & 12.001 & 1 \\
+     4 & -8 & -3
+   \end{bmatrix}x=
+   \begin{bmatrix}
+     -5 \\
+     -33.002 \\
+     -21
+   \end{bmatrix}
+ \]
+ The true solution to this system of equations is $x = [1\ 2\ 3]^T$, and the matrix $A$ is very well conditioned. Compute the solution to this problem using the LU decomposition without pivoting, using arithmetic rounded to three significant places. The compute using pivoting and compare the answers with the exact result.
+\end{problem}
+
+\begin{solution}
+  Without pivoting, we can extract $U$ as follows.
+  \[ U =
+    \begin{bmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 16000 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      -2 & 0 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+      1 & 0 & 0 \\
+      -3 & 1 & 0 \\
+      0 & 0 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+      2 & 4 & -5 \\
+      6 & 12.001 & 1 \\
+      4 & -8 & -3
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      2 & 4 & -5 \\
+      0 & .001 & 16 \\
+      0 & 0 & 256007
+    \end{bmatrix}
+  \]
+  and 
+  \[
+    L = 
+    \begin{bmatrix}
+      1 & 0 & 0 \\
+      3 & 1 & 0 \\
+      0 & 0 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      2 & 0 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & -16000 & 1
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      1 & 0 & 0 \\
+      3 & 1 & 0 \\
+      2 & -16000 & 1
+    \end{bmatrix}
+  \]
+  So now we have that $Ly = [-5,\ -33.002,\ -21]^T$
+  So we have
+  \[ 
+    \begin{aligned}
+      y_1 &= -5 \\
+      y_2 &= -33.002 - (3)(-5) = -18.002 \\
+      y_3 &= -21 + 16000(18.002) + 2(5) = 288021 
+    \end{aligned}
+  \]
+\end{solution}
+
+\end{document}
