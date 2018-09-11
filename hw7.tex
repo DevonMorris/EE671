@@ -48,7 +48,7 @@
    \end{bmatrix}x=
    \begin{bmatrix}
      -5 \\
-     -33.002 \\
+     33.002 \\
      -21
    \end{bmatrix}
  \]
@@ -78,11 +78,11 @@
       6 & 12.001 & 1 \\
       4 & -8 & -3
     \end{bmatrix}
-    =
+    \approx
     \begin{bmatrix}
       2 & 4 & -5 \\
       0 & .001 & 16 \\
-      0 & 0 & 256007
+      0 & 0 & 256000
     \end{bmatrix}
   \]
   and 
@@ -110,13 +110,103 @@
       2 & -16000 & 1
     \end{bmatrix}
   \]
-  So now we have that $Ly = [-5,\ -33.002,\ -21]^T$
+  So now we have that $Ly = [-5\ 33.002\ -21]^T$
   So we have
   \[ 
     \begin{aligned}
       y_1 &= -5 \\
-      y_2 &= -33.002 - (3)(-5) = -18.002 \\
-      y_3 &= -21 + 16000(18.002) + 2(5) = 288021 
+      y_2 &= 33.002 - (3)(-5) = 48.002 \approx 48 \\
+      y_3 &= -21 + 16000(48.0) + 2(5) = 768021 \approx 768000
+    \end{aligned}
+  \]
+  Now using back substitution we have
+  \[
+    \begin{aligned}
+      x_3  &= \frac{768000}{256000} = 3 \\
+      x_2 &= \frac{1}{.001}(48 - 16(3)) = \frac{1}{.001}(0) = 0 \\
+      x_1 &= \frac{1}{2}(-5 +5(3) - 4(0)) = 5 
+    \end{aligned}
+  \]
+  This is obviously the wrong answer due to the rounding to three decimal places. This will also happen in floating point arithmetic.
+
+  With pivoting, we have 
+  \[
+    \begin{aligned}
+      U &= 
+    \begin{bmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & 2.08e-5 & 1
+    \end{bmatrix}
+    P_{23}
+    \begin{bmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      -.66 & 0 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+      1 & 0 & 0 \\
+      -.33 & 1 & 0 \\
+      0 & 0 & 1
+    \end{bmatrix}
+    P_{21}
+   \begin{bmatrix}
+     2 & 4 & -5 \\
+     6 & 12.001 & 1 \\
+     4 & -8 & -3
+   \end{bmatrix} \\
+   &\approx
+   \begin{bmatrix}
+     6 & 12.001 & 1 \\
+     0 & -16.00 & -3.66 \\
+     0 & 0 & -5.33 \\
+   \end{bmatrix}
+   \end{aligned}
+  \]
+  And we have that
+  \[ 
+    \begin{aligned}
+      V &= P_{21}
+    \begin{bmatrix}
+      1 & 0 & 0 \\
+      .33 & 1 & 0 \\
+      0 & 0 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      .66 & 0 & 1
+    \end{bmatrix}
+    P_{23}
+    \begin{bmatrix}
+      1 & 0 & 0 \\
+      0 & 1 & 0 \\
+      0 & -2.08e-5 & 1
+    \end{bmatrix} \\
+    &=
+    \begin{bmatrix}
+      0.33 & -2.08e-5 & 1 \\
+      1 & 0 & 0 \\
+      0.66 & 1 & 0 \\
+    \end{bmatrix}
+  \end{aligned}
+  \]
+  So
+  \[
+    L = 
+    P_{23}P_{21}V = 
+    \begin{bmatrix}
+      1 & 0 & 0 \\
+      0.66 & 1 & 0 \\
+      0.33 & -2.08e-5 & 1 
+    \end{bmatrix}
+  \]
+  So to get the correct decomposition, we have to apply this permutation to the vector and we get $[33.002\ -21\ -5]$.
+  Using forward substitution, we have
+  \[
+    \begin{aligned}
+      y_1 &= 33.002 \approx 33.0 \\
+      y_2 &= \\
     \end{aligned}
   \]
 \end{solution}
