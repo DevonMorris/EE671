@@ -1,0 +1,95 @@
+\documentclass{homework}
+\usepackage{ dsfont }
+\usepackage{ mathtools }
+\usepackage{ commath }
+\usepackage[final]{ pdfpages }
+
+\name{Timothy Devon Morris}
+\course{EC En 671}
+\term{Fall 2018}
+\hwnum{9}
+
+\begin{document}
+
+\begin{problem}[7-5]
+  Show that the minimum squared error when computing the LS $\norm{Ax - b}_2^2$ solution is 
+  \[ E_{\text{min}} = \norm{U_2^Hb}_2^2\]
+  Interpret this result in light of the four fundamental subspaces.
+\end{problem}
+
+\begin{solution}
+  We have that 
+  \[
+    \begin{aligned}
+      E_{\text{min}} &= \norm{\hat{b} - b}_2^2 = \norm{\left(\Sigma V^HV
+      \begin{bmatrix}
+        \Sigma_1^{-1} & 0 \\
+        0 & 0
+      \end{bmatrix}
+  - I\right)U^Hb}_2^2 \\
+      &= \norm{\left(
+      \begin{bmatrix}
+        \Sigma_1 & 0 \\
+        0 & 0
+      \end{bmatrix}
+      \begin{bmatrix}
+        \Sigma_1^{-1} & 0 \\
+        0 & 0
+      \end{bmatrix}
+  - I\right)U^Hb}_2^2 \\
+  &=\norm{
+  \begin{bmatrix}
+    0 & 0 \\
+    0 & I
+  \end{bmatrix}U^Hb}_2^2 = \norm{U_2^Hb}_2^2
+    \end{aligned}\]
+    This makes sense because $U^Hb \in \mathcal{N}(A^H)$. Since $\mathds{R}^n = \mathcal{R}(A) \oplus \mathcal{N}(A^H)$ we are representing the part that is not in $\mathcal{R}(A)$ by $U_2^Hb$ which is naturally the error.
+\end{solution}
+
+\begin{problem}[7-9]
+ For the $2 \times 2$ matrix 
+ \[
+   A = 
+   \begin{bmatrix}
+     w & x \\
+     y & z
+   \end{bmatrix}
+ \]
+ derive expressions for $\sigma_{\max}(A)$ and $\sigma_{\min}(A)$ in terms of $w,x,y, \text{and} z$.
+\end{problem}
+
+\begin{solution}
+  First we will find the eigenvalues of $A^TA$. So we have
+  \[ 
+    \begin{aligned}
+      \det(A^TA - \lambda I) &= \det 
+    \begin{bmatrix}
+      w^2 + y^2 - \lambda & wx + yz \\
+      wx + yz & x^2 + z^2 - \lambda
+    \end{bmatrix} \\ 
+    &= \lambda^2 - \lambda(w^2 + x^2 + y^2 + z^2) + (w^2 + y^2)(x^2 + z^2) + (wx + yz)^2
+    \end{aligned}
+  \]
+  Using the quadratic formula, we have that
+  \[ \sigma_{\max} = \sqrt{\frac{(w^2 + x^2 + y^2 + z^2) + \sqrt{(w^2 + x^2 + y^2 + z^2) - 4(w^2 + y^2)(x^2 + z^2) - 4(wx + yz)^2}}{2}}\]
+  \[ \sigma_{\min} = \sqrt{\frac{(w^2 + x^2 + y^2 + z^2) - \sqrt{(w^2 + x^2 + y^2 + z^2) - 4(w^2 + y^2)(x^2 + z^2) - 4(wx + yz)^2}}{2}}\]
+  This can probably be simplified significantly, but this will give you the correct answer.
+\end{solution}
+
+\begin{problem}[7-15]
+  The data
+  \[B=
+    \begin{bmatrix}
+    4.84726 & -2.46786 & 0.549036 & -4.31815 \\
+    0.813505 & -3.46221 & -0.251525 & 2.97353
+    \end{bmatrix}
+  \]
+  is believed to be a rotation of the data
+  \[A=
+    \begin{bmatrix}
+    4.51076 & -2.18889 & 0.58951 & -4.715 \\
+    1.95213 & -3.64499 & -0.131083 & 2.29282
+    \end{bmatrix}
+  \]
+\end{problem}
+\end{document}
