@@ -1,0 +1,116 @@
+\documentclass{homework}
+\usepackage{ dsfont }
+\usepackage{ mathtools }
+\usepackage{ commath }
+\usepackage[final]{ pdfpages }
+
+\name{Timothy Devon Morris}
+\course{EC En 671}
+\term{Fall 2018}
+\hwnum{8}
+
+\begin{document}
+
+\begin{problem}[6-1]
+  Let $\mathcal{L}$ be the operator that computes the negative of the second derivative, $\mathcal{L}u = -\frac{d^2}{dt^2}u$, defined for functions on $(0,1)$. Show that
+  \[u_n(t) = \sin (n\pi t)\]
+  is an eigenfunction of $\mathcal{L}$ with eigenvalue $\lambda_n = (n\pi)^2$
+\end{problem}
+
+\begin{solution}
+  Consider $\mathcal{L}u_n$. 
+  \[\mathcal{L}u_n = -\frac{d^2}{dt^2}\sin (n\pi t) = -n\pi \frac{d}{dt}\cos (n\pi t)
+  = (n\pi)^2 \sin(n \pi t)\]
+  Thus we have that 
+  \[ \mathcal{L}u_n = (n \pi)^2u_n\]
+  Therefore $u_n$ is an eigenfunction with eigenvalue of $\lambda_n = (n \pi)^2$.
+\end{solution}
+
+\begin{problem}[6-4]
+ Show that the determinant of an $n \times n$ matrix is the product of the eigenvalues; that is,
+ \[ \det(A) = \prod_{i=1}^{n}\lambda_i \]
+\end{problem}
+
+\begin{solution}
+ We will first consider the determinant of $A - \lambda I$. This is also known as the characteristic polynomial, of which the roots are the eigenvalues. Factoring this characteristic polynomial gives us
+ \[ \det(A- \lambda I) = \prod_{i=1}^{n}(\lambda_i - \lambda)\]
+ Thus, setting $\lambda = 0$ we have
+ \[ \det(A) = \prod_{i=1}^{n} \lambda_i\]
+\end{solution}
+
+\begin{problem}[6-5]
+  Show that the trace of a matrix is the sum of the eigenvalues, 
+  \[ tr(A) = \sum_{i=1}^n \lambda_i\]
+\end{problem}
+
+\begin{solution}
+  We note that every matrix admits a jordan normal form, given by
+  \[ A = PJP^{-1}\]
+  So we have that
+  \[ tr(A) = tr(PJP^{-1}) = tr(P^{-1}PJ) = tr(J) = \sum_{i=1}^{n} \lambda_i\]
+\end{solution}
+
+\begin{problem}[6-11]
+  Show that if $\lambda_1, \lambda_2, \dots, \lambda_m$ are the eigenvalues of $A$, and if $g(x)$ is a scalar polynomial, then the eigenvalues of $g(A)$ are 
+  \[g(\lambda_1), g(\lambda_2), \dots, g(\lambda_m).\] 
+\end{problem}
+
+\begin{solution}
+  Consider a polynomial $g(x) = a_0x^0 + a_1x + a_2x^2 + \dots + a_nx^n$. So we have
+  \[ g(A) = a_0I + a_1A + a_2A^2 + \dots + a_nA^n\]
+  Now consider an eigen pair of $A$, $(\lambda_i, v_i)$. Thus we have
+  \[ \begin{aligned}
+      g(A)v_i &= (a_0I + a_1A + a_2A^2 + \dots + a_nA^n)v_i \\
+              &= (a_0v_i + a_1\lambda_i v_i + a_2\lambda_i^2v_i + \dots + a_n\lambda_i^n v_i) \\
+              &= (a_0 + a_1\lambda_i + a_2\lambda_i^2 + \dots + a_n\lambda_i^n)v_i \\
+              &= g(\lambda_i)v_i
+     \end{aligned}
+  \]
+  Thus we have that $g(\lambda_i)$ is an eigenvalue of $g(A)$. Since $i$ in choosing $\lambda_i$ was arbitrary, we have that the eigenvalues of $g(A)$ are $g(\lambda_1),g(\lambda_2),\dots,g(\lambda_m)$.
+\end{solution}
+
+\begin{problem}[6-21]
+  Show that A self-adjoint matrix is positive semidefinite if and oly if all of its eigenvalues are $\geq$ 0.
+\end{problem}
+
+\begin{solution}
+  Suppose a self-adjoint matrix is positive semidefinite. Note we have that a self-adjoint matrix has an orthogonal eigenbasis. Thus any $x$ can be written as
+  \[x = a_1v_1 + a_2v_2 + \dots + a_nv_n\]
+  Thus we have
+  \[ 
+    \begin{aligned}
+      \langle x, Ax\rangle &= \langle a_1v_1 + \dots + a_nv_n, Aa_1v_1 + \dots + Aa_nv_n\rangle \\
+                           &= a_1^2\norm{v_1}^2\lambda_1 + \dots + a_n^2\norm{v_n}^2\lambda_n \\
+                           &= a_1^2\lambda_1 + \dots + a_n^2\lambda_n \geq 0
+    \end{aligned}
+  \]
+  In order for this to hold for all $a_1,\dots,a_n$, we must have that $\lambda_i \geq 0$. So if a self-adjoint matrix is positive semidefinite, we have that all of its eigenvalues must be non-negative.
+
+  Now suppose that a self-adjoint matrix has all of its eigenvalues greater than or equal to 0. Using the eigenbasis, we have
+  \[ \langle x, Ax \rangle = a^2_1 \lambda_1 + \dots + a_n^2\lambda_n \geq 0\]
+  Therefore the matrix is positive semidefinite. Note: the same arguments hold for positive definiteness and strictly greater than.
+\end{solution}
+
+\begin{problem}[6-24]
+  Prove that every hermetian $m \times m$ matrix $A$ can be diagonalized by a unitary matrix following the two steps.  
+  \begin{parts}
+    \part
+    Show that if $A$ is self-adjoint and $U$ is unitary, then $T = U^HAU$ is also self-adjoint 
+    \part
+    Show that if a self-adjoint matrix is triangular, it must be diagonal
+  \end{parts}
+\end{problem}
+
+\begin{solution}
+  \begin{parts}
+    \part
+    Suppose $A$ is self-adjoint and $U$ is unitary. Let $T = U^HAU$ is also self-adjoint. It suffices to show that $T^H = T$. So we have that
+    \[T^H = (U^HAU)^H = U^HA^HU = U^HAU = T\]
+    \part
+    Suppose $A$ is self adjoint and triangular. Thus without loss of generality, assume $A_{ij} = 0$ for $j > i$. Thus we have that
+    \[A_{ij} = \bar{A}_{ji} =0\ \text{for}\ i > j\]
+    Thus, A must be both upper and lower triangular. Therefore, we have that A is diagonal.
+  \end{parts}
+\end{solution}
+
+\end{document}
