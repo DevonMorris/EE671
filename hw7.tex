@@ -290,8 +290,165 @@
 
 \begin{problem}[5-22]
   In this problem you will demonstrate the direct computation of the pseudioinverse is numerically inferior to coputation using a matrix factorization such at the QR or Cholesky factorization. Suppose it is desired to find the least-squares solution to 
-  \[
+  \[ A =
+    \begin{bmatrix}
+      10000 & 10001 \\
+      10001 & 10002 \\
+      10002 & 10003 \\
+      10003 & 10004 \\
+      10004 & 10005
+    \end{bmatrix}
+    x =
+    \begin{bmatrix}
+     20001 \\
+     20003 \\
+     20005 \\
+     20007 \\
+     20009
+    \end{bmatrix} = b
   \]
+  The exact solution is $x = [1\ 1]^T$.
+  \begin{parts}
+    \part
+    Determine the condition numbers of $A$ and $A^TA$.
+    \part
+    Compute the least-squares solution using the formula $\hat{x} = (A^TA)^{-1}Ab$ explicitly.
+    \part
+    Compute the solution using hte QR decomposition, where the QR decomposition is computed using Householder transformations.
+    \part
+    Compute the solution using the Cholesky factorization.
+    \part
+    Compare the answers, and comment.
+  \end{parts}
 \end{problem}
+
+\begin{solution}
+  \begin{parts}
+    \part
+    The matrix $A$ does not have a condition number because it is not square. The conditon number of $A^TA$ is 
+    \[ \kappa (A) = 1.67856e+16\]
+    \part
+    Using the explicit formula, we have
+    \[
+      \hat{x} = 
+      \begin{bmatrix}
+        0.2593 \\
+        0.78660
+      \end{bmatrix}
+    \]
+    \part
+    Using the $QR$ decomposition we have.
+    \[
+      \hat{x} = 
+      \begin{bmatrix}
+        1.0 \\
+        0.99999
+      \end{bmatrix}
+    \]
+    \part
+    Using the cholesky factorization we have
+    \[\hat{x} = 
+      \begin{bmatrix}
+        0.6666 \\
+        1.3333
+      \end{bmatrix}
+    \]
+    \part
+    This suggests that the most stable algorithm is a QR solver. The naive approach is extremely bad and the cholesky factorization is still off.
+  \end{parts}
+\end{solution}
+
+\begin{problem}[5-27]
+  Let $D$ be a diagonal matrix, let $M$ be a matrix such that $M^TM = D$, and let $Q = MD^{-1/2}$. 
+  \begin{parts}
+    \part
+    Show that $Q$ is orthonormal
+    \part
+    For a $2 \times 2$ matrix $M_1$ of the form
+    \[ M_1 =
+      \begin{bmatrix}
+        \beta & 1 \\
+        1 & \alpha
+      \end{bmatrix}
+    \]
+    show how to choose $\alpha$ and $\beta$ so that a 2-vector $x$
+    \[
+      M_1 x =
+      \begin{bmatrix}
+        \times \\
+        0
+      \end{bmatrix}
+    \]
+    and
+    \[M_1DM_1^H = D_1\]
+    is diagonal. Thus $M_1x$ acts like a Givens rotation, but without the need to compose a square root.
+    \part Describe how to apply the $2 \times 2$ matrix to perform a "fast QR" decomposition of a matrix $A$.
+  \end{parts}
+\end{problem}
+
+\begin{solution}
+ \begin{parts}
+   \part
+   Consider $Q^TQ$
+     \[ 
+       Q^TQ = D^{-1/2}M^TMD^{-1/2} = D^{-1/2}DD^{-1/2} = I
+     \]
+    \part
+    Consider $M_1x$.
+    \[ M_1x =
+      \begin{bmatrix}
+        \beta & 1 \\
+        1 & \alpha
+      \end{bmatrix}
+      \begin{bmatrix}
+        x_1 \\
+        x_2
+      \end{bmatrix}
+      =
+      \begin{bmatrix}
+        \times \\
+        0
+      \end{bmatrix}
+    \]
+    Thus
+    \[x_1 + \alpha x_2 = 0\]
+    Now that we have $\alpha$, we have that
+    \[
+      \begin{aligned}
+      \begin{bmatrix}
+        \beta & 1 \\
+        1 & \alpha
+      \end{bmatrix}
+      \begin{bmatrix}
+        d_1 & 0 \\
+        0 & d_2
+      \end{bmatrix}
+      \begin{bmatrix}
+        \bar{\beta} & 1 \\
+        1 & \bar{\alpha} 
+      \end{bmatrix}
+      &= 
+      \begin{bmatrix}
+        d_1\beta & d_2 \\
+        d_1 & d_2\alpha
+      \end{bmatrix}
+      \begin{bmatrix}
+        \bar{\beta} & 1 \\
+        1 & \bar{\alpha}
+      \end{bmatrix} \\
+      &=
+      \begin{bmatrix}
+        d_1|\beta|^2 + d_2 & d_1\beta + d_2\bar{\alpha} \\
+        d_1\bar{\beta} + d_2\alpha & d_1 + d_2 |\alpha|^2
+      \end{bmatrix}
+      \end{aligned} 
+    \]
+    Combining these two equations, we have
+    \[ \alpha = -\frac{x_1}{x_2} \quad \beta = -\bar{\alpha} \frac{d_2}{d_1}\]
+    \part
+    Consider the matrix $A$ factored as $A = DB$ where $D$ is diagonal. Thus we can say that, $M_1D^{-1/2}$ is an orthogonal transformation. In the remaining $2 \times 2$ there will be an upper triangular matrix $R_1 = D^{1/2}B$ left. When you lift $M_1D^{-1/2}$ to the size of the whole matrix, it remains a rotation (orthogonal) matrix. So in this fashion we multiply all these $Q$ matrices and are left with a single $R$. You then have to transpose this $Q$ matrix to invert it and put it on the other side.
+
+ \end{parts} 
+\end{solution}
 
 \end{document}
