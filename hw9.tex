@@ -78,18 +78,45 @@
 
 \begin{problem}[7-15]
   The data
-  \[B=
+  \[A=
     \begin{bmatrix}
     4.84726 & -2.46786 & 0.549036 & -4.31815 \\
     0.813505 & -3.46221 & -0.251525 & 2.97353
     \end{bmatrix}
   \]
   is believed to be a rotation of the data
-  \[A=
+  \[B=
     \begin{bmatrix}
     4.51076 & -2.18889 & 0.58951 & -4.715 \\
     1.95213 & -3.64499 & -0.131083 & 2.29282
     \end{bmatrix}
   \]
 \end{problem}
+
+\begin{solution}
+  The procrustes problem can solved by decomposing $BA^H = U\Sigma V^H$ and then setting $Q = UV^T$. Following this procedure, we get
+  \[ Q =
+    \begin{bmatrix}
+      0.9866143 & -0.16307122 \\
+      0.16307122 & 0.9866143
+    \end{bmatrix}
+  \]
+  Taking the $\arcsin$ of .16307122, gives us 9.38 degrees of difference.
+\end{solution}
+
+\begin{problem}[7-17]
+  Let $A = B + jC$ , where $B$ and $C$ are real. Determine a means of finding the SVD of A in terms of the SVD of
+  \[
+    \begin{bmatrix}
+      B & -C \\
+      C & B
+    \end{bmatrix}
+  \]
+\end{problem}
+
+\begin{solution}
+   
+\end{solution}
+
 \end{document}
+
