@@ -1,0 +1,118 @@
+\documentclass{homework}
+\usepackage{ dsfont }
+\usepackage{ mathtools }
+\usepackage{ commath }
+\usepackage[final]{ pdfpages }
+
+\name{Timothy Devon Morris}
+\course{EC En 671}
+\term{Fall 2018}
+\hwnum{10}
+
+\begin{document}
+
+\begin{problem}[14-15]
+  A white noise signal $f[t]$ is passed through a system with impulse response $\{.5, -1, -2, 1, .5\}$. Write a program to identify the system using the LMS algorithm. Try your experiment where the variance of $f[t]$ is $\sigma_f^2 = 0.1$ and the following variations
+  \begin{parts}
+    \part The LMS filter has five coefficients
+    \part The LMS filter has ten coefficients
+    \part The LMS filter has three coefficients.
+  \end{parts}
+  Determine experimentally the range of $\mu$ for which the adaptive filter converges.
+\end{problem}
+
+\begin{solution}
+  \includepdf[pages=-]{hw10prob1.pdf}   
+\end{solution}
+
+\begin{problem}[18-2a]
+  Let $h(x) = x_1^2 - x_2$ 
+  \begin{parts}
+    \part
+    Make a plot of the "surface" $h(x) = 0$
+    \part
+    Determine a parameterization $x(\xi)$ of points on the surface.
+    \part
+    Plot the vector $dx(\xi)/d\xi$ and the vector $\nabla h(x)$ at the point $x = (2,4)$, Show that these vectors are orthogonal.
+  \end{parts}
+\end{problem}
+
+\begin{solution}
+  \includepdf[pages=-]{hw10prob2.pdf}
+\end{solution}
+
+\begin{problem}[18-7]
+ Consider the problem
+ \[
+   \begin{aligned}
+     &\text{maximize: } 2x_1x_2 + x_2x_3 + x_1x_3 \\
+     &\text{subject to: } x_1 + x_2 + x_3 = 3
+   \end{aligned}
+ \]
+ Determine the solution $(x_1, x_2, x_3, \lambda)$. Compute the matrix $\mathbf{L}$, and determine if your solution is a minumum, maximum, or neither.
+\end{problem}
+
+\begin{solution}
+ We begin by constructing the lagrangian
+ \[ L(x_1, x_2, x_3, \lambda) = 2x_1x_2 + x_2x_3 + x_1x_3 + \lambda(x_1 + x_2 + x_3 - 3)\]
+ By the first order necessary conditions, we have that
+ \[
+   \begin{bmatrix}
+     2x_2 + x_3 + \lambda \\
+     2x_1 + x_3 + \lambda \\
+     x_2 + x_1 + \lambda \\
+     x_1 + x_2 + x_3
+   \end{bmatrix}
+   = 
+   \begin{bmatrix}
+     0 \\
+     0 \\
+     0 \\
+     3
+   \end{bmatrix}
+ \]
+ As a linear system, we have
+ \[
+   \begin{bmatrix}
+     0 & 2 & 1 & 1 \\
+     2 & 0 & 3 & 1 \\
+     1 & 1 & 0 & 1 \\
+     1 & 1 & 1 & 0
+   \end{bmatrix}
+   \begin{bmatrix}
+     x_1 \\
+     x_2 \\
+     x_3 \\
+     \lambda
+   \end{bmatrix}
+   =
+   \begin{bmatrix}
+     0 \\
+     0 \\
+     0 \\
+     3
+   \end{bmatrix}
+ \]
+ Solving this linear system gives us
+ \[
+   \begin{aligned}
+     x_1 &= 1.5 \\
+     x_2 &=  1.5 \\
+     x_3 &= 0 \\
+     \lambda &= -3
+   \end{aligned}
+ \]
+ So now we have that 
+ \[
+   \mathbf{L}
+   =
+   \begin{bmatrix}
+     0 & 2 & 1\\
+     2 & 0 & 1\\
+     1 & 1 & 0
+   \end{bmatrix}
+ \]
+ Which is indefinite, therefore the this point is neither a maximum or minimum.
+\end{solution}
+
+\end{document}
