@@ -115,7 +115,76 @@
 \end{problem}
 
 \begin{solution}
-   
+  Let us examine the SVD of $A$. We can split both unitary matrices in their real and imaginary parts as follows
+  \[ 
+    \begin{aligned}
+      A &= U_A \Sigma_A V^H_A = (\Re(U_A) + j\Im(U_A))\Sigma_A(\Re(V_A) + j\Im(V_A))^H \\
+        &= \Re(U_A)\Sigma_A\Re(V_A)^T + \Im(U_A)\Sigma_A\Im(V_A)^T + j(\Im(U_A)\Sigma_A\Re(V_A)^T - \Re(U_A)\Sigma_A\Im(V_A)^T)
+    \end{aligned}
+  \]
+  So our candidate matrix effectively becomes
+  \[
+    \begin{bmatrix}
+      \Re(U_A)\Sigma_A\Re(V_A)^T + \Im(U_A)\Sigma_A\Im(V_A)^T & - \Im(U_A)\Sigma_A\Re(V_A)^T + \Re(U_A)\Sigma_A\Im(V_A)^T) \\
+      \Im(U_A)\Sigma_A\Re(V_A)^T - \Re(U_A)\Sigma_A\Im(V_A)^T) &\Re(U_A)\Sigma_A\Re(V_A)^T + \Im(U_A)\Sigma_A\Im(V_A)^T 
+    \end{bmatrix}
+  \]
+  This matrix can be factored as
+  \[
+    \begin{bmatrix}
+      \Re(U_A) & -\Im(U_A) \\
+      \Im(U_A) & \Re(U_A)
+    \end{bmatrix}
+    \begin{bmatrix}
+      \Sigma_A & 0 \\
+      0 & \Sigma_A
+    \end{bmatrix}
+    \begin{bmatrix}
+      \Re(V_A)^T & \Im(V_A)^T \\
+      -\Im(V_A)^T & \Re(V_A)
+    \end{bmatrix}
+  \]
+  This is obviously an SVD of our modified matrix. However, it is not the canonical form, since the entries of $\Sigma$ are not ordered. Thus, in practice, one would compute the SVD of our modified matrix and then permute $\Sigma$ to put it in a repeating order along with $U$ and $V^H$. Once that is done, one would use the real and imaginary parts of $U_A$ and $V_A$ to build the SVD of $A$.
+\end{solution}
+
+\begin{problem}[7-18]
+  Show that the SVD decomposition of an $n \times m$ matrix $A$, with $n > m$, can be found by first computing the $QR$ factorization
+  \[
+    A = Q
+    \begin{bmatrix}
+      R \\
+      0
+    \end{bmatrix}
+  \]
+  then computing the SVD of the $m \times m$ upper triangular matrix $R$.
+\end{problem}
+
+\begin{solution}
+  Let us first compute the QR decomposition of $A$.  
+  \[ A = QR = 
+    \begin{bmatrix}
+      Q_1 & Q_2
+    \end{bmatrix}
+    \begin{bmatrix}
+      R_1 \\
+      0
+    \end{bmatrix}
+  \]
+  Now take the SVD of $R_1 = U\Sigma V^T$, so that we have
+  \[ A = 
+    \begin{bmatrix}
+      Q_1 & Q_2
+    \end{bmatrix}
+    \begin{bmatrix}
+      U\Sigma V^T \\
+      0
+    \end{bmatrix}
+     = QU\Sigma V^T
+   \]
+   However we notice that $QU$ is a unitary matrix since 
+   \[(QU)(QU)^H = QUU^HQ^T = I,\]
+   \[(QU)^H(QU) = U^HQ^TQU^H = I.\]
+   Therefore, we can calculate the QR decomposition first and then the SVD of the resultant $R$.
 \end{solution}
 
 \end{document}
