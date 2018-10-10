@@ -10,7 +10,7 @@
 \examnum{1}
 
 \begin{document}
-  I certify that the solutions to this exam resprent my own owrk, and that I did not consult with any other individual about the exam.
+  I certify that the solutions to this exam resprent my own work, and that I did not consult with any other individual about the exam.
   \vspace*{50px}
   \begin{problem}
     Let $\mathcal{M}$ be the set of $3 \times 3$ complex matrices, and let
@@ -60,7 +60,7 @@
         \[
           \langle \alpha X, Y\rangle = tr(Y^H(\alpha X)) = tr(\alpha Y^HX) = \alpha tr(Y^HX) = \alpha \langle X, Y\rangle
         \]
-        \part We can exploit the fact that the trace in linear
+        \part We can exploit the fact that the trace is linear
         \[
           \begin{aligned}
             \langle X + Y, Z\rangle &= tr(Z^H(X + Y)) = tr(Z^HX + Z^HY) \\
@@ -100,7 +100,273 @@
       \part
       I implemented this in a jupyter notebook and used the modified gram schmidt algorithm
       \includepdf[pages=-]{exam1prob1c.pdf}
-
     \end{parts}
   \end{solution}
+
+  \begin{problem}
+    Let
+    \[
+      A = 
+      \begin{bmatrix}
+        1 & 2 & 0 \\
+        0 & 3 & 1
+      \end{bmatrix}
+    \]
+    \begin{parts}
+      \part
+      What is the range and null space of $A$?
+      \part
+      Find a projection matrix $P$ that projects elements of $\mathds{R}^3$ onto the null space of $A$.
+    \end{parts}
+  \end{problem}
+
+  \begin{solution}
+    \begin{parts}
+      \part
+      The range space of $A$ is simply the span of the columns
+      \[
+        \mathcal{R}(A) = span\left\{
+          \begin{bmatrix}
+            1 \\
+            0
+          \end{bmatrix},
+          \begin{bmatrix}
+            2 \\
+            3
+          \end{bmatrix},
+          \begin{bmatrix}
+            0 \\
+            1
+          \end{bmatrix}
+        \right\}
+        =
+        span\left\{
+          \begin{bmatrix}
+            1 \\
+            0
+          \end{bmatrix},
+          \begin{bmatrix}
+            0 \\
+            1
+          \end{bmatrix}
+        \right\}
+        = \mathds{R}^2
+      \]
+      We can also find the nullspace of $A$. We thus have the two equations
+      \[
+        \begin{aligned}
+          x_1 + 2x_2 = 0 \\
+          3x_2 + x_3 = 0
+        \end{aligned}
+      \]
+      Which is equivalent to
+      \[
+        \begin{aligned}
+          x_1 &= -2x_2 \\
+          x_3 &= -3x_2
+        \end{aligned}
+      \]
+      Treating $x_2$ as a free variable, we have that
+      \[
+        \mathcal{N}(A) = span\left\{
+          \begin{bmatrix}
+           -2 \\
+           1 \\
+           -3
+          \end{bmatrix}
+        \right\}
+      \]
+      \part
+      Let $q = [-2, 1, -3]^T$. Now let $x \in \mathds{R}^3$ be some arbitrary vector. We have that
+      \[
+        proj_{\mathcal{N}(A)}x = proj_{q}x = \frac{\langle x, q\rangle}{\norm{q}^2}q = \frac{q^Tx}{\norm{q}^2}q = \frac{qq^T}{\norm{q}^2}x
+      \]
+      Therefore we have our projection matrix must be
+      \[
+        P = \frac{qq^T}{\norm{q}^2}
+      \]
+      Note: this is just a one dimensional result that can be generalized to $A(A^HA)^{-1}A^H$ as seen in the book. Thus we have that
+      \[
+        \norm{q}^2 = 4 + 1 + 9 = 14
+      \]
+      Therefore
+      \[
+        P = \frac{1}{14}
+        \begin{bmatrix}
+          4 & -2 & 6 \\
+          -2 & 1 & -3 \\
+          6 & -3 & 9
+        \end{bmatrix}
+      \]
+    \end{parts}
+  \end{solution}
+
+  \begin{problem}
+    Let $V = span\{p_1(t), p_2(t)\}$, where
+    \[
+      \begin{aligned}
+        p_1(t) &= 1-t^2, \quad 0 \leq t \leq 1 \\
+        p_2(t) &= e^{-t}, \quad 0 \leq t \leq 1
+      \end{aligned}
+    \]
+    Then $V$ is a closed subspace of $L_2[0,1]$. By Theorem 2.10, $L_2[0,1] = V \oplus V^\perp$, and any $x \in L_2[0,1]$ can be uniquely written as $x = y + z$, where $y\in V$ and $z \in V^\perp$. Let $x(t) = 1 + t + t^2 + t^3$. Find $y(t)$ and $z(t)$.
+  \end{problem}
+  \begin{solution}
+    To solve this problem, we will use Theorem 3.2 and the grammian matrix. We compute the grammian matrix as follows
+    \[
+      R = \begin{bmatrix}
+        \langle p_1, p_1 \rangle & \langle p_2, p_1\rangle \\
+        \langle p_2, p_1 \rangle & \langle p_2, p_2 \rangle
+      \end{bmatrix}
+    \]
+    Where
+    \[
+      \begin{aligned}
+        \langle p_1, p_1 \rangle &= \int_0^1 p_1(t)^2\ dt =  \frac{8}{15} \\
+        \langle p_2, p_1 \rangle &= \langle p_1, p_2 \rangle = \int_0^1 p_1(t)p_2(t)\ dt = 4e^{-1} - 1 \\
+        \langle p_2, p_2 \rangle &= \int_0^1 p_2(t)^2\ dt = \frac{1}{2} - \frac{1}{2}e^{-2}
+      \end{aligned}
+    \]
+    Furthermore, let
+    \[
+      p = \begin{bmatrix}
+        \langle x, p_1\rangle \\
+        \langle x, p_2\rangle
+      \end{bmatrix}
+    \]
+    Where
+    \[
+      \begin{aligned}
+        \langle x, p_1 \rangle &= \int_0^1 x(t)p_1(t)\ dt = \frac{17}{15} \\
+        \langle x, p_2 \rangle &= \int_0^1 x(t)p_2(t)\ dt = 10 - 24e^{-1}
+      \end{aligned}
+    \]
+    Therefore we have the equation $Rc = p$
+    \[
+      \begin{bmatrix}
+        \frac{8}{15} & 4e^{-1} - 1\\
+        4e^{-1} - 1 & \frac{1}{2} - \frac{1}{2}e^{-2}
+      \end{bmatrix}c =
+      \begin{bmatrix}
+        \frac{17}{15} \\
+        10 - 24e^{-1}
+      \end{bmatrix}
+    \]
+    Solving this equation gives us
+    \[
+      c = 
+      \begin{bmatrix}
+        \frac{-2863 + 1920e - 317e^2}{488 - 240e + 22e^2} \\
+        -\frac{-260 + 97e^2}{244 - 120e + 11e^2}
+      \end{bmatrix}
+    \]
+    Therefore, we have that
+    \[ y(t) = \frac{-2863 + 1920e - 317e^2}{488 - 240e + 22e^2}(1-t^2) -  \frac{-260 + 97e^2}{244 - 120e + 11e^2}e^{-t} \\
+    \]
+    And $z(t) = x(t) - y(t)$ so
+    \[
+      z(t) = 1 + t + t^2 + t^3 - \frac{-2863 + 1920e - 317e^2}{488 - 240e + 22e^2}(1-t^2) + \frac{-260 + 97e^2}{244 - 120e + 11e^2}e^{-t} 
+    \]
+  \end{solution}
+  \begin{problem}
+    With the exam, I sent you the file mid1 p4 data.mat which contains a Matlab “mat” file with 1001 data points $\{t_i, x_i\}^{1001}_{i=1}$ . By viewing the data, you will see that it follows a trend that looks like a sinusoid of the form $A\sin(10t)$ superimposed on a quadratic function of the form $at^2 + bt + c$. Using Matlab or otherwise, find the coefficients $A, a, b,$ and $c$ that minimizes the mean square error between the data points and the function $\hat{x}(t) = A sin(10t) + at^2 + bt + c$.
+  \end{problem}
+
+  \begin{solution}
+    I did this in an jupyter notebook and have included it below
+    \includepdf[pages=-]{exam1prob4.pdf}
+  \end{solution}
+
+  \begin{problem}
+    Suppose that we are to set up a special manufacturing company which will operate for only one year. During the year the company is to produce one million copies of a single product. Let $p(k)$ be the number of products manufactured in month $k$, $k = 1, \dots, 12$, then the obective is for
+    \[
+      \sum_{k=1}^{12} p(k) = 10^6.
+    \]
+    Let $u(k)$ be the number of workers hired or fired during month $k, k = 1 \dots 12$, where $u(k) < 0$ implies that workers were fired. To simplify the problem, we assume that $u(k)$ is a real numer that may or may not be an integer, corresponding to being hired/fired part way through the month. During the $j^{th}$ month, the  number of workers currently employed is $\sum_{k=1}^j u(k)$. At the end of the twelve-month period, all workers must be fired, i.e., $\sum_{k=1}^{12}u(k) = 0$. It is assumed that each worker produces 100 products each month. If $u(k)$ workers are hired/fired in the $k^{th}$ month, the processing cost of hiring/firing can be argued to be $u^2(k)$ because, as $u$ increases, people must be paid to stand in line and more nonproductive employees must be paid. Find the number of employees $u(k)$ to be hired/fired each month to minimize the total processing costs $\sum_{k=1}^{12} u^2(k)$.
+  \end{problem}
+
+  \begin{solution} Writing $u$ as a vector
+    \[
+      u = 
+      \begin{bmatrix}
+        u(1) \\
+        u(2) \\
+        \vdots \\
+        u(12)
+      \end{bmatrix}
+    \]
+    We have the following optimization problem
+    \[
+      \begin{aligned}
+        \text{Minimize}:& \ \norm{u}^2 \\
+        \text{Subject to:}&\ \sum_{k=1}^{12} u(k) = 0 \\
+                          &\ \sum_{k=1}^{12} \sum_{j=1}^k 100u(j) = 10^6
+      \end{aligned}
+    \]
+    If we let $T$ be a lower triangular matrix of 100s
+    \[
+      T =
+      \begin{bmatrix}
+        100 & 0 & 0 & \cdots & 0 \\
+        100 & 100 & 0 & \cdots & 0 \\
+        100 & 100 & 100 & \cdots & 0 \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        100 & 100 & 100 & \cdots & 100
+      \end{bmatrix}
+    \]
+    and let $\mathbf{1}$ be a vector of ones, we can rewrite this optimization as
+    \[
+      \begin{aligned}
+        \text{Minimize}:& \ \norm{u}^2 \\
+        \text{Subject to}: &\ \langle \mathbf{1}, u\rangle = 0 \\
+                          &\ \langle \mathbf{1}, Tu\rangle = 10^6
+      \end{aligned}
+    \]
+    Combining these two constraints into a matrix 
+    \[
+      A = 
+      \begin{bmatrix}
+        1 & 1 & 1 & \cdots & 1 \\
+        1200 & 1100 & 1000 & \cdots & 100
+      \end{bmatrix},
+    \]
+    and a vector 
+    \[
+      b = 
+      \begin{bmatrix}
+        0 \\
+        10^6
+      \end{bmatrix}
+    \]
+    we have the optimization
+    \[
+      \begin{aligned}
+        \text{Minimize}:& \ \norm{u} \\
+        \text{Subject to}: &\ Au = b 
+      \end{aligned}
+    \]
+    Note: we removed the square in the norm, because squaring is monotonic on $[0, \infty)$, therefore the arg minimum is the same. Now we have exactly the min-norm problem, which is solved using the equation
+    \[
+      u = A^T(AA^T)^{-1}b
+    \]
+    Solving this numerically gives us
+    \[
+      u = 
+      \begin{bmatrix}
+        384.6154 \\
+        314.6853 \\
+        244.7552 \\
+        174.8252 \\
+        104.8951 \\
+        32.9650 \\
+        -32.9650 \\
+        -104.8951 \\
+        -174.8252 \\
+        -244.7552 \\
+        -314.6853 \\
+        -384.6154 \\
+      \end{bmatrix}
+    \]
+  \end{solution}
+
 \end{document}
