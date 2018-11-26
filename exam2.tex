@@ -1,0 +1,145 @@
+\documentclass{exam}
+\usepackage{ dsfont }
+\usepackage{ mathtools }
+\usepackage{ commath }
+\usepackage{ amsmath }
+\usepackage[final]{ pdfpages }
+
+\name{Timothy Devon Morris}
+\course{EC En 671}
+\term{Fall 2018}
+\examnum{2}
+
+\begin{document}
+  I certify that the solutions to this exam resprent my own work, and that I did not consult with any other individual about the exam.
+  \vspace*{50px}
+  \begin{problem}
+     Consider the discrete time state space equations
+     \[
+         \begin{aligned}
+             x_{k+1} &= Ax_k \\
+             y_k &= Cx_k,
+         \end{aligned}
+     \]
+     with initial condition $x_0$, where $x_k \in \mathds{R}^n$ and $y_k$ is a scalar.
+     \begin{parts}
+         \part Show that $y_k = CA^kx_0$.
+         \part Consider the linear operator $\mathcal{A}: \mathds{R}^n \rightarrow \ell_2$
+         \[
+             \mathcal{A}[x_0] = \left( Cx_0, CAx_0, CA^2x_0, CA^3x_0, \dots \right)
+         \]
+         Find the adjoint $\mathcal{A}^*: \ell_2 \rightarrow \mathds{R}^n$ of $\mathcal{A}$.
+         \part Suppose that you collect an infinite sequence of data $e_k = y_k - Cx_k = y_k - CA^kx_0$. Find the formula for the least squares solution for the initial condition $x_0$ that minimizes 
+         \[
+             \sum_{k=0}^{\infty} \norm{y_k - CA^kx_0}^2.
+         \]
+     \end{parts}
+  \end{problem}
+  \begin{solution}
+      \begin{parts}
+        \part We will proceed by induction. For the base case $k = 0$ we have that         
+        \[
+            y_0 = Cx_0 = CIx_0 = CA^0x_0
+        \]
+        Furthermore, we have that
+        \[
+            x_1 = Ax_0
+        \]
+        Now we will assume that $x_{k} = A^{k}x_{0}$, now we have that
+        \[
+            x_{k+1} = Ax_{k} = AA^{k}x_{0} = A^{k+1}x_0
+        \]
+        and thus we have
+        \[
+            y_{k+1} = Cx_{k+1} = CA^{k+1}x_0
+        \]
+        Therefore, by induction we have that
+        \[
+            y_k = CA^kx_0
+        \]
+        for all $k \in \mathds{N}$
+        \part
+        let $x_0 \in \mathds{R}^n$ and $y \in \ell_2$. We want to find $\mathcal{A}^*$ such that
+        \[
+            \langle \mathcal{A}x_0, y \rangle_{\ell_2} = \langle x_0, \mathcal{A}^*y \rangle_{\mathds{R}^n}
+        \]
+        So expanding the the first expression expressions, we have 
+        \[
+            \langle \mathcal{A}x_0, y \rangle = \sum_{k=0}^{\infty} CA^kx_0y_k = \sum_{k=0}^{\infty} x_0^T(A^k)^TC^Ty_k = x_0^T \sum_{k=0}^{\infty} y_k(A^k)^TC^T
+        \]
+        Now let $\mathcal{A}^*: \ell_2 \rightarrow \mathds{R}^n$ be 
+        \[
+            \mathcal{A}^*[y] = \sum_{k=0}^{\infty}y_k(A^k)^TC^T
+        \]
+        And we have that
+        \[
+            \langle \mathcal{A}x_0, y\rangle = x_0^T\mathcal{A}^*[y] = \langle \mathcal{A}^*[y], x_0 \rangle = \langle x_0, \mathcal{A}^*[y]\rangle
+        \]
+        Since $x_0$ and $y$ are arbitrary, we have found the adjoint.
+        Note: there is an implicit assumption in the definition of $\mathcal{A}$ that it actually maps into $\ell_2$. A sufficient condition for this would be stability of the linear system.
+        \part
+        Note, this optimization can be rewritten as
+        \[
+            \underset{x \in \mathds{R}^n}{\text{minimize}}: \norm{y - \mathcal{A}[x_0]}_{\ell_2}^2
+        \]
+        We now note that $\mathcal{A}^*\mathcal{A}: \mathds{R}^n \rightarrow \mathds{R}^n$ and is given by 
+        \[
+            \begin{aligned}
+                \mathcal{A}^*\mathcal{A}[x_0] &= \mathcal{A}^* \left[ \left( Cx_0, CAx_0, CA^2x_0,CA^3x_0,\dots \right) \right] \\
+                                              &= \sum_{k=0}^{\infty} (CA^kx_0)(A^k)^TC^T \\
+                                              &= \sum_{k=0}^{\infty} (CA^k)^T(CA^k)x_0
+            \end{aligned}
+        \]
+        Or we can write this as a matrix
+        \[
+            \mathcal{A}^*\mathcal{A} = \sum_{k=0}^{\infty} (CA^k)^T(CA^k)
+        \]
+        Under some assumptions (specifically that the observability matrix is full rank) we can define an inverse operation
+        \[
+            (\mathcal{A}^*\mathcal{A})^{-1} = \left( \sum_{k=0}^{\infty} (CA^k)^T(CA^k) \right)^{-1}
+        \]
+        Where the inverse is taken as a matrix inverse. By the fredholm alternative and the projection theorem, we have that
+        \[
+            x_0 = \left( \sum_{k=0}^{\infty} (CA^k)^T(CA^k) \right)^{-1} \sum_{k=0}^{\infty} (CA^k)^Ty_k
+        \]
+        is the minimizer.
+      \end{parts}
+  \end{solution}
+
+  \begin{problem}
+      Suppose that $A \in \mathds{C}^{m \times n}$ and that $\text{rank}(A) = r < \text{min}(m,n)$. Show that the QR factorization of $A$ can be written as
+      \[
+          A = 
+          \begin{bmatrix}
+              Q_1 & Q_2
+          \end{bmatrix}
+          \begin{bmatrix}
+              R_1 & R_2 \\
+              0_{(m-r) \times r} & 0_{(m-r) \times (n-r)}
+          \end{bmatrix}
+      \]
+      Where $Q_1 \in \mathds{C}^{m \times r}$ and $Q_2 \in \mathds{C}^{m \times (m-r)}$, $R_1 \in \mathds{C}^{r \times r}$, and $R_2 \in \mathds{C}^{r \times (n-r)}$. Furthermore, show that $\mathcal{R}(A) = \text{span}(Q_1)$ and $\mathcal{N}(A^H) = \text{span}(Q_2)$.
+  \end{problem}
+
+  \begin{solution}
+    We first note that every matrix has a QR factorization. So we have
+    \[
+        A = QR
+    \]
+    Where $Q \in \mathds{C}^{m \times m}$ is unitary and $R \in \mathds{C}^{m \times n}$ is upper triangular. Note since $Q$ is unitary, we have that $\text{rank}(Q) = m$. Thus we have that $\text{rank}(R) = r < \text{min}(m,n)$. Proceeding to do the QR decomposition using the gram-schmidt process, we realize that the columnspace of $A$ is only of dimension $r$. Thus we have that
+    \[
+        A = 
+    \]
+
+    Now that we have our decomposition we quickly see that
+    \[
+        A = Q_1R_1 + Q_1R_2 = Q_1(R_1 + R_2)
+    \]
+    Let $y \in \mathcal{R}(A)$. We have there exists an $x$ such that $Ax = y$, or equivalently
+    \[
+        y = Q_1(R_1 + R_2)x = Q_1z
+    \]
+where $z = (R_1 + R_2)x$. Thus, $y \in \mathcal{R}(Q_1)$ and we have that $\mathcal{R}(A) \subset \mathcal{R}(Q_1)$. 
+  \end{solution}
+
+\end{document}
