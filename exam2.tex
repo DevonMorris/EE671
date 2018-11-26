@@ -11,7 +11,7 @@
 \examnum{2}
 
 \begin{document}
-  I certify that the solutions to this exam resprent my own work, and that I did not consult with any other individual about the exam.
+  I certify that the solutions to this exam repesent my own work, and that I did not consult with any other individual about the exam.
   \vspace*{50px}
   \begin{problem}
      Consider the discrete time state space equations
@@ -122,24 +122,21 @@
   \end{problem}
 
   \begin{solution}
-    We first note that every matrix has a QR factorization. So we have
-    \[
-        A = QR
-    \]
-    Where $Q \in \mathds{C}^{m \times m}$ is unitary and $R \in \mathds{C}^{m \times n}$ is upper triangular. Note since $Q$ is unitary, we have that $\text{rank}(Q) = m$. Thus we have that $\text{rank}(R) = r < \text{min}(m,n)$. Proceeding to do the QR decomposition using the gram-schmidt process, we realize that the columnspace of $A$ is only of dimension $r$. Thus we have that
-    \[
-        A = 
-    \]
 
-    Now that we have our decomposition we quickly see that
-    \[
-        A = Q_1R_1 + Q_1R_2 = Q_1(R_1 + R_2)
-    \]
-    Let $y \in \mathcal{R}(A)$. We have there exists an $x$ such that $Ax = y$, or equivalently
-    \[
-        y = Q_1(R_1 + R_2)x = Q_1z
-    \]
-where $z = (R_1 + R_2)x$. Thus, $y \in \mathcal{R}(Q_1)$ and we have that $\mathcal{R}(A) \subset \mathcal{R}(Q_1)$. 
+  Now that we have found our decomposition, we wish to show that $\mathcal{R}(A) = \mathcal{R}(Q_1)$. We will first show that $\mathcal{R}(A) \subset \mathcal{R}(Q_1)$. Let $y \in \mathcal{R}(A)$, thus we have an $x$ such that $y = Ax$. So we have that
+      \[
+         y = 
+         \begin{bmatrix}
+             Q_1R_1 & Q_1R_2 \\
+         \end{bmatrix}
+         \begin{bmatrix}
+             x_1 \\
+             x_2
+         \end{bmatrix}
+         = 
+         Q_1R_1x_1 + Q_1R_2x_2 = Q_1(R_1x_1 + R_2x_2)
+      \]
+      Thus $y \in \mathcal{R}(Q_1)$ and $\mathcal{R}(A) \subset \mathcal{R}(Q_1)$. Now we wish to show that $\mathcal{R}(Q_1) \subset \mathcal{R}(A)$. Let $y \in \mathcal{R}(Q_1)$, thus we have an $x$ such that $y = Q_1x$.
   \end{solution}
 
 \end{document}
