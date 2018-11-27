@@ -100,7 +100,7 @@
         \]
         Where the inverse is taken as a matrix inverse. By the fredholm alternative and the projection theorem, we have that
         \[
-            x_0 = \left( \sum_{k=0}^{\infty} (CA^k)^T(CA^k) \right)^{-1} \sum_{k=0}^{\infty} (CA^k)^Ty_k
+            x_0^* = \left( \sum_{k=0}^{\infty} (CA^k)^T(CA^k) \right)^{-1} \sum_{k=0}^{\infty} (CA^k)^Ty_k
         \]
         is the minimizer.
       \end{parts}
@@ -122,6 +122,29 @@
   \end{problem}
 
   \begin{solution}
+      We know that every matrix $A$ has a QR decomposition $A = QR$. However we know that $\text{rank}(Q) = m$, so we have that $\text{rank}(R) = r$. Since $R \in \mathds{C}^{m \times n}$ is upper triangular, we note that there must be $m-r$ rows of zeros (Note these zeros can be shifted to the bottom by pivoting). We can partition $Q$ correspondingly into $Q_1 \in \mathds{C}^{m \times r}$ (the first $r$ columns and $Q_2 \in \mathds{C}^{m \times (m - r)}$ (the last columns). Thus we have
+      \[
+          A = 
+          \begin{bmatrix}
+              Q_1 & Q_2
+          \end{bmatrix}
+          \begin{bmatrix}
+              R \\
+              0_{(m-r) \times n}
+          \end{bmatrix}
+      \]
+      Now we can partition $R$ again so that it has a square part by taking the first $r$ columns. So we have
+      \[
+          A = 
+          \begin{bmatrix}
+              Q_1 & Q_2
+          \end{bmatrix}
+          \begin{bmatrix}
+              R_1 & R_2 \\
+              0_{(m-r) \times r} & 0_{(m-r) \times (n-r)}
+          \end{bmatrix}
+      \]
+      At this point, we also note that $R_1$ is full rank and thus invertible.
 
   Now that we have found our decomposition, we wish to show that $\mathcal{R}(A) = \mathcal{R}(Q_1)$. We will first show that $\mathcal{R}(A) \subset \mathcal{R}(Q_1)$. Let $y \in \mathcal{R}(A)$, thus we have an $x$ such that $y = Ax$. So we have that
       \[
@@ -136,7 +159,101 @@
          = 
          Q_1R_1x_1 + Q_1R_2x_2 = Q_1(R_1x_1 + R_2x_2)
       \]
-      Thus $y \in \mathcal{R}(Q_1)$ and $\mathcal{R}(A) \subset \mathcal{R}(Q_1)$. Now we wish to show that $\mathcal{R}(Q_1) \subset \mathcal{R}(A)$. Let $y \in \mathcal{R}(Q_1)$, thus we have an $x$ such that $y = Q_1x$.
+      Thus $y \in \mathcal{R}(Q_1)$ and $\mathcal{R}(A) \subset \mathcal{R}(Q_1)$. Now we wish to show that $\mathcal{R}(Q_1) \subset \mathcal{R}(A)$. Since we are working in finite dimensional space, this is equivalent to showing $\mathcal{R}(A)^{\perp} \subset \mathcal{R}(Q_1)^{\perp}$. By the fundamental theorem of linear algebra, it suffices to show $\mathcal{N}(A^H) \subset \mathcal{N}(Q_1^H)$. Thus let $x \in \mathcal{N}(A^H)$. We have that
+      \[
+          A^Hx = 
+          \begin{bmatrix}
+              Q_1R_1 & Q_1R_2
+          \end{bmatrix}
+          ^Hx
+          = 
+          \begin{bmatrix}
+              R_1^HQ_1^H \\
+              R_2^HQ_1^H
+          \end{bmatrix}x
+          =0
+      \]
+      Thus we have $R_1^HQ_1^Hx = 0$, but we have that $R_1$ is full rank by construction, which implies that $R_1^H$ is also full rank. Therfore $x \in \mathcal{N}(Q_1^H)$, and $\mathcal{N}(A^H) \subset \mathcal{N}(Q_1^H)$. So finally we have $\mathcal{R}(A) = \mathcal{R}(Q_1)$.
+
+      Now we want to show that $\mathcal{N}(A^H) = \mathcal{R}(Q_2)$. We note that $\mathcal{R}(Q_1) \perp \mathcal{R}(Q_2)$, since $Q = \left[ Q_1 \ Q_2 \right]$ is a unitary matrix and that $\mathcal{R}(Q) = \mathds{R}^m$. So we have that $\mathcal{R}(Q_1)^{\perp} = \mathcal{R}(Q_2)$. Therefore, by the previous result and fundamental theorem of linear algebra
+      \[
+          \mathcal{R}(Q_2) = \mathcal{R}(Q_1)^{\perp} = \mathcal{R}(A)^{\perp} = \mathcal{N}(A^H)
+      \]
+
+  \end{solution}
+
+  \begin{problem}
+      Write a Matlab/Python function \texttt{myqr} that computes the QR factorization of a matrix $A \in \mathds{C}^{n\times n}$ that uses only elementary Matlab/Python operations like multiply, add, transpose, etc. Generate 10 random complex matrices and check that $Q$ is unitary, $R$ is upper triangular, and $QR = A$. Compare \texttt{myqr} to the Matlab function \texttt{qr}. Do you get the same results? Why or why not? Is QR factorization unique?
+  \end{problem}
+
+  \begin{solution}
+      \includepdf[pages=-]{exam2prob3.pdf}
+  \end{solution}
+
+  \begin{problem}
+     Consider the linear time-invariant system that is described by the ordinary differential equation 
+
+     \[
+         \ddot{y} + a_1\dot{y} + a_0y = b_0u
+     \]
+     where $y(t)$ is the output, $u(t)$ is the input, and $a_1$, $a_0$, and $b_0$ are constants. In this problem we will consider the problem of system identification which is to determine the system coefficients $a_1$, $a_0$, and $b_0$ given known input-output data.
+     \begin{parts}
+        \part Convert the ordinary differential equation to a difference equation by using the approximation 
+        \[
+            \begin{aligned}
+                \dot{z}(t) &\approx \frac{z(t) - z(t - T_s)}{T_s} \\
+                \ddot{z}(t) &\approx \frac{z(t) - 2z(t-T_s) + z(t - 2T_s)}{T_s^2}
+            \end{aligned}
+        \]
+        and using the notation $z[k] \triangleq z(kT_s)$.
+     \end{parts}
+  \end{problem}
+
+  \begin{solution}
+     \begin{parts}
+        \part
+        Converting the ODE above gives us
+        \[
+            \begin{aligned}
+                y[k] - 2y[k-1] + y[k-2] + a_1T_s(y[k] - y[k-1]) + a_0T_s^2y[k] = T_s^2b_0u[k] \\
+                (1 + a_1T_s + a_0T_s^2)y[k] + (-2 - a_1T_s)y[k-1] + y[k-2] = T_s^2b_0u[k]
+            \end{aligned}
+        \]
+        Solving for this for the current time-step gives us
+        \[
+            y[k] = \frac{(2 + a_1T_s)y[k-1] - y[k-2] + T_s^2b_0u[k]}{1 + a_1T_s + a_0T_s^2}
+        \]
+     \part
+     In batch least squares we need to write our equation as linear in our parameters we are estimating.
+     \[
+         a_1(T_sy[k] -a_1T_sy[k-1]) + a_0(T_s^2y[k]) - b_0T_s^2u[k] = -y[k] + 2y[k-1] -y[k-2]
+     \]
+     Rewriting this as a matrix equation we have
+     \[
+         \begin{aligned}
+         \begin{bmatrix}
+             T_sy[0] - a_1T_sy[-1] & T_s^2y[0] & -T_s^2u[0] \\
+             T_sy[1] - a_1T_sy[0] & T_s^2y[1] & -T_s^2u[0] \\
+             T_sy[2] - a_1T_sy[1] & T_s^2y[2] & -T_s^2u[0] \\
+             \vdots & \vdots & \vdots \\
+             T_sy[N-1] - a_1T_sy[N-2] & T_s^2y[N-1] & -T_s^2u[N-1]
+         \end{bmatrix}
+         \begin{bmatrix}
+             a_1 \\
+             a_0 \\
+             b_0
+         \end{bmatrix} = \\
+         \begin{bmatrix}
+             -y[0] + 2y[-1] - y[-2] \\
+             -y[1] + 2y[0] - y[-1] \\
+             -y[2] + 2y[1] - y[0] \\
+             \vdots \\
+             -y[N-1] + 2y[N-2] - y[N-3]
+         \end{bmatrix}
+         \end{aligned}
+     \]
+     Call this equation $Ac = x$. We find the least squares solution using $\hat{c} = (A^TA)^{-1}A^Tx$
+     \end{parts} 
   \end{solution}
 
 \end{document}
