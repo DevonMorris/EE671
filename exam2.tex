@@ -206,6 +206,18 @@
             \end{aligned}
         \]
         and using the notation $z[k] \triangleq z(kT_s)$.
+        \part Suppose that you collected $N$ input-output samples, i.e., $(y[n],u[n]), n=0,1,\dots,N-1$, where $N\geq 3$. Find the equations that show to use batch least squares to find the estimated coefficients $\hat{a}_1, \hat{a}_0$, and $\hat{b}_0$ so that the squared error $\sum_{n=0}^{N-1} (y[n] - \hat{y}[n])^2$ is minimized, where $\hat{y}$ satisfies
+        \[
+            \ddot{\hat{y}} + \hat{a}_1\dot{\hat{y}} + \hat{a}_0\hat{y} + \hat{b}_0u.
+        \]
+        \part
+        Derive the equations for a recursive least squares algorithm that solves the same problem as item (b).
+        \part Implement the system and the recursive least squares identification scheme in Python using $T_s = 0.01$ and the real coefficients of $a_1 = 1.0, a_0 = 2.0, b_0 = 3.0$. Use the input
+        \[
+            u(t) = \sin(0.01t) + \sin(0.1t) + \sin(t) + \sin(10t)
+        \]
+        \part
+        Compare the results of the batch least squares and the recursive least squares
      \end{parts}
   \end{problem}
 
@@ -226,15 +238,15 @@
      \part
      In batch least squares we need to write our equation as linear in our parameters we are estimating.
      \[
-         a_1(T_sy[k] -a_1T_sy[k-1]) + a_0(T_s^2y[k]) - b_0T_s^2u[k] = -y[k] + 2y[k-1] -y[k-2]
+         a_1(T_sy[k] -T_sy[k-1]) + a_0(T_s^2y[k]) - b_0T_s^2u[k] = -y[k] + 2y[k-1] -y[k-2]
      \]
      Rewriting this as a matrix equation we have
      \[
          \begin{aligned}
          \begin{bmatrix}
              T_sy[0] - a_1T_sy[-1] & T_s^2y[0] & -T_s^2u[0] \\
-             T_sy[1] - a_1T_sy[0] & T_s^2y[1] & -T_s^2u[0] \\
-             T_sy[2] - a_1T_sy[1] & T_s^2y[2] & -T_s^2u[0] \\
+             T_sy[1] - a_1T_sy[0] & T_s^2y[1] & -T_s^2u[1] \\
+             T_sy[2] - a_1T_sy[1] & T_s^2y[2] & -T_s^2u[2] \\
              \vdots & \vdots & \vdots \\
              T_sy[N-1] - a_1T_sy[N-2] & T_s^2y[N-1] & -T_s^2u[N-1]
          \end{bmatrix}
@@ -252,7 +264,39 @@
          \end{bmatrix}
          \end{aligned}
      \]
-     Call this equation $Ac = x$. We find the least squares solution using $\hat{c} = (A^TA)^{-1}A^Tx$
+     Call this equation $Ac = x$. We find the least squares solution using $\hat{c} = (A^TA)^{-1}A^Tx$. Assuming we know the initial conditions $y[-1], y[-2]$ or we set them to 0.
+     \part As we have set up this problem, it fits quite nicely in the RLS algorithm. Let 
+     \[
+         q[i] = 
+         \begin{bmatrix}
+             T_sy[i] - a_1T_sy[i-1] \\
+             T_s^2y[i] \\
+             -T_s^2u[i]
+         \end{bmatrix}
+     \]
+     Note: we can write our $A$ matrix from the last problem as
+     \[
+         A = 
+         \begin{bmatrix}
+             q^H[0] \\
+             q^H[1] \\
+             q^H[2] \\
+             \vdots \\
+             q[N-1]
+         \end{bmatrix}
+     \]
+     We define our grammian as
+     \[
+         R[k] = \sum_{i=0}^{k}q[i]q^H[i]
+     \]
+     And we can define our our desired outputs as 
+     \[
+         d[i] = -y[i] + 2y[i-1] - y[i-2]
+     \]
+     Let
+     \[
+         p[k] = \sum_{i=0}^kq[i]d[i] = p[k-1] + q[k]d[k]
+     \]
      \end{parts} 
   \end{solution}
 
